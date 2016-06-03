@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  player_id_name: MyString
+  nick_name: MyString
+  is_guest_user: 
+
+two:
+  player_id_name: MyString
+  nick_name: MyString
+  is_guest_user: 

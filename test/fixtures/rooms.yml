@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  room_pass: MyString
+  min_player: 1
+  max_player: 1
+  block_no: 1
+  block_place: MyString
+  recruitment_deadline: 2016-06-04 01:37:36
+  meeting_time: 2016-06-04 01:37:36
+  quest_start_time: 2016-06-04 01:37:36
+  quest_end_time: 2016-06-04 01:37:36
+
+two:
+  name: MyString
+  room_pass: MyString
+  min_player: 1
+  max_player: 1
+  block_no: 1
+  block_place: MyString
+  recruitment_deadline: 2016-06-04 01:37:36
+  meeting_time: 2016-06-04 01:37:36
+  quest_start_time: 2016-06-04 01:37:36
+  quest_end_time: 2016-06-04 01:37:36
