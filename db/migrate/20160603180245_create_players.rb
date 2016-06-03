@@ -3,7 +3,7 @@ class CreatePlayers < ActiveRecord::Migration[5.0]
     create_table :players do |t|
       t.string :player_id_name
       t.string :nick_name
-      t.bool :is_guest_user
+      t.boolean :is_guest_user, :null => false, :default => true
 
       t.timestamps
     end
