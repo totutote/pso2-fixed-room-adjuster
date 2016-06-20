@@ -22,4 +22,4 @@ test:
 
 production:
   encoding: utf8
-    pool: 15
+  pool: 15
