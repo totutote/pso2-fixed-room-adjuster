@@ -1,0 +1,9 @@
+<%= form_for(@player, url: room_room_members_path(params[:id])) do |f| %>
+  <div class="field">
+    <%= f.label :player_id_name %><br />
+    <%= f.text_field :player_id_name %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

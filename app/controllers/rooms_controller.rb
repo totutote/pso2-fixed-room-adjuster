@@ -12,14 +12,23 @@ class RoomsController < ApplicationController
     if @room.saved?
       redirect_to :action => "index", notice: "'#{@room.name}' を作成しました。"
     else
-      render 'new' 
+      render 'new'
     end
   end
 
+  def show
+    @room = Room.find(params[:id])
+    @player = Player.new
+  end
+
   def destroy
+    rooms = RoomMember.where(room_id: [params[:id]])
+    rooms.each do |room|
+      room.player.destroy if room.player.is_guest_user
+    end
     @room = Room.find(params[:id])
     @room.destroy
-    redirect_to :action => "index"
+    redirect_to rooms_path
   end
 
   private
