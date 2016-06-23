@@ -50,3 +50,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 #heroku
 gem 'pg', group: :production
 gem 'rails_12factor', group: :production
+
+#view library
+gem 'bootstrap-sass', '~> 3.3.0'
