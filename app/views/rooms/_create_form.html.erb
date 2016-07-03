@@ -1,17 +1,19 @@
 <%= form_for(@room) do |f| %>
+  <div class="form-group">
   <div class="field">
     <%= f.label :name %><br />
-    <%= f.text_field :name %>
+    <%= f.text_field :name, :class => "form-control" %>
   </div>
   <div class="field">
     <%= f.label :quest_start_time %><br />
-    <%= f.datetime_field :quest_start_time %>
+    <%= f.datetime_select :quest_start_time, :class => "form-control" %>
   </div>
    <div class="field">
     <%= f.label :quest_end_time %><br />
-    <%= f.datetime_field :quest_end_time %>
-  </div> 
+    <%= f.datetime_select :quest_end_time, :class => "form-control" %>
+  </div>
+  </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit :class => "btn btn-default" %>
   </div>
 <% end %>

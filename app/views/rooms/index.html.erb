@@ -1,12 +1,12 @@
-<h1>募集中の固定</h1>
+<h2>募集中の固定</h2>
 
-<ul>
+<ul class="list-group">
 <% @rooms.each do |room| %>
-  <ui>
+  <li class="list-group-item">
   <%= room.name %>
   <%= link_to '詳細を確認', room %>
   <%= link_to '削除', room, method: :delete, data: { confirm: '固定部屋を削除しますか？' } %>
-  </ui>
+  </li>
 <% end %>
 </ul>
 

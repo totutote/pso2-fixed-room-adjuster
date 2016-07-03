@@ -1,18 +1,20 @@
-<h1>固定詳細</h1>
-<ul>
-<li><%= @room.name %></li>
-<li><%= @room.quest_start_time %></li>
-<li><%= @room.quest_end_time %></li>
-<li>
-  <ol>
-  <% @room.players.each do |player| %>
-    <li><%= player.player_id_name %></li>
+<h1><%= @room.name%> の詳細</h1>
+<dl class="dl-horizontal">
+<dt>クエスト開始</dt><dd><%= @room.quest_start_time %></dd>
+<dt>クエスト終了<dd><%= @room.quest_end_time %></dd>
+</dl>
+
+<h2>現在の参加メンバー</h2>
+<% unless @room.players.empty? %>
+<ol class="list-group">
+  <% @room.room_members.each do |room_member| %>
+  <li class="list-group-item">
+    <%= room_member.player.player_id_name %>
+    <%= link_to '削除', room_room_member_path(room_member.id), :action => "destroy", method: :delete,
+    data: { confirm: room_member.player.player_id_name + 'をキックしますか？' } %> </li>
   <% end %>
-  </ol>
-</li>
-</ul>
+</ol>
+<% end %>
 
 <%= render 'add_guest_form' %>
-
-<%= link_to '戻る', action: "index" %>
 

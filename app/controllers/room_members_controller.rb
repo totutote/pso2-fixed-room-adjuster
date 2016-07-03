@@ -10,7 +10,7 @@ class RoomMembersController < ApplicationController
   end
 
   def destroy
-    @room_member = RoomMember.find(params[:id])
+    @room_member = RoomMember.find(params[:room_id])
     @room_member.destroy
     redirect_to room_path(params[:id])
   end
