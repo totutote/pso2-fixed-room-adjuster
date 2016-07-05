@@ -1,17 +1,38 @@
 <%= form_for(@room) do |f| %>
   <div class="form-group">
   <div class="field">
-    <%= f.label :name %><br />
+    <%= f.label :name, "固定名" %><br />
     <%= f.text_field :name, :class => "form-control" %>
   </div>
   <div class="field">
-    <%= f.label :quest_start_time %><br />
+    <%= f.label :block_no, "ブロックNo" %><br />
+    <%= f.number_field :block_no, in: 1..299, :class => "form-control" %>
+  </div> 
+  <div class="field">
+    <%= f.label :block_place, "集合場所" %><br />
+    <%= f.text_field :block_place, :class => "form-control" %>
+  </div>
+  <div class="field">
+    <%= f.label :meeting_time, "集合時刻" %><br />
+    <%= f.datetime_select :meeting_time, :class => "form-control" %>
+  </div> 
+  <div class="field">
+    <%= f.label :quest_start_time, "クエスト開始予定時刻" %><br />
     <%= f.datetime_select :quest_start_time, :class => "form-control" %>
   </div>
-   <div class="field">
-    <%= f.label :quest_end_time %><br />
+  <div class="field">
+    <%= f.label :quest_end_time, "クエスト終了予定時刻" %><br />
     <%= f.datetime_select :quest_end_time, :class => "form-control" %>
   </div>
+  <div class="field">
+    <%= f.label :min_player, "最低人数" %><br />
+    <%= f.number_field :min_player, in: 1..999, :class => "form-control" %>
+  </div>
+  <div class="field">
+    <%= f.label :min_player, "最大人数" %><br />
+    <%= f.number_field :max_player, in: 1..999, :class => "form-control" %>
+  </div>
+
   </div>
   <div class="actions">
     <%= f.submit :class => "btn btn-default" %>

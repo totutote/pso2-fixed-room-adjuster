@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160603190023) do
+ActiveRecord::Schema.define(version: 20160705124616) do
 
   create_table "players", force: :cascade do |t|
     t.string   "player_id_name"
@@ -35,10 +35,10 @@ ActiveRecord::Schema.define(version: 20160603190023) do
     t.integer  "max_player"
     t.integer  "block_no"
     t.string   "block_place"
-    t.time     "recruitment_deadline"
-    t.time     "meeting_time"
-    t.time     "quest_start_time"
-    t.time     "quest_end_time"
+    t.datetime "recruitment_deadline"
+    t.datetime "meeting_time"
+    t.datetime "quest_start_time"
+    t.datetime "quest_end_time"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
   end
