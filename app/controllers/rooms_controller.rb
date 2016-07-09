@@ -19,6 +19,7 @@ class RoomsController < ApplicationController
   def show
     @room = Room.find(params[:id])
     @player = Player.new
+    @room_member = RoomMember.new
   end
 
   def destroy

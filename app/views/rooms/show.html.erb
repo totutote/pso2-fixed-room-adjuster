@@ -2,7 +2,7 @@
 <dl class="dl-horizontal">
 <dt>ブロックNo</dt><dd><%= @room.block_no %></dd>
 <dt>集合場所</dt><dd><%= @room.block_place %></dd>
-<dt>集合時刻</dt><dd><%= @room.meeting_time.strftime("%Y年%m月%d日 %H時%M分") %></dd>
+<dt>集合時刻</dt><dd><%= @room.meeting_time %></dd>
 <dt>クエスト開始</dt><dd><%= @room.quest_start_time %></dd>
 <dt>クエスト終了<dd><%= @room.quest_end_time %></dd>
 <dt>最少人数<dd><%= @room.min_player %></dd>
@@ -15,7 +15,9 @@
   <% @room.room_members.each do |room_member| %>
   <li class="list-group-item">
     <%= room_member.player.player_id_name %>
-    <%= link_to '削除', room_room_member_path(room_member.id), :action => "destroy", method: :delete,
+    <%= 'ルームリーダー可' if room_member.acceptable_room_leader %>
+    <%= 'パーティーリーダー可' if room_member.acceptable_party_leader %>
+    <%= link_to 'キック', room_room_member_path(room_member.id), :action => "destroy", method: :delete, class: "btn active btn-danger",
     data: { confirm: room_member.player.player_id_name + 'をキックしますか？' } %> </li>
   <% end %>
 </ol>
