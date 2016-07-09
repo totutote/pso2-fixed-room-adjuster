@@ -22,6 +22,19 @@ class RoomsController < ApplicationController
     @room_member = RoomMember.new
   end
 
+  def edit
+    @room = Room.find(params[:id])
+  end
+
+  def update
+    status = ::Rooms::UpdateService.new(Room.find(params[:id]), room_params).execute
+    if status
+      redirect_to :action => "show", notice: "編集しました。"
+    else
+      render 'edit'
+    end 
+  end
+
   def destroy
     rooms = RoomMember.where(room_id: [params[:id]])
     rooms.each do |room|
