@@ -32,6 +32,10 @@
     <%= f.label :min_player, "最大人数" %><br />
     <%= f.number_field :max_player, in: 1..999, :class => "form-control" %>
   </div>
+  <div class="field">
+    <%= f.label :description, "詳細説明" %><br />
+    <%= f.text_area :description, :class => "form-control", :rows => 3 %>
+  </div>
 
   </div>
   <div class="actions">

@@ -8,6 +8,14 @@
 <dt>最少人数<dd><%= @room.min_player %></dd>
 <dt>最大人数<dd><%= @room.max_player %></dd>
 </dl>
+<div class="panel panel-default">
+  <div class="panel-heading">詳細説明</div>
+  <div class="panel-body">
+    <%= @room.description.nil? ? '未入力' : simple_format(@room.description) %> 
+  </div>
+</div>
+
+
 
 <% unless @room.players.empty? %>
 <h2>現在の参加メンバー</h2>

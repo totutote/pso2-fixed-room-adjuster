@@ -37,6 +37,7 @@ class RoomsController < ApplicationController
   def room_params
     params.require(:room).permit(:name, :room_pass, :min_player, :max_player,
                                  :block_no, :block_place, :recruitment_deadline,
-                                 :meeting_time, :quest_start_time, :quest_end_time)
+                                 :meeting_time, :quest_start_time, :quest_end_time,
+                                 :description)
   end
 end
