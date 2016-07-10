@@ -33,6 +33,10 @@
     <%= f.number_field :max_player, in: 1..999, :class => "form-control" %>
   </div>
   <div class="field">
+    <%= f.label :room_pass, "部屋のパスワード" %><br />
+    <%= f.text_field :room_pass, :class => "form-control" %>
+  </div>
+  <div class="field">
     <%= f.label :description, "詳細説明" %><br />
     <%= f.text_area :description, :class => "form-control", :rows => 3 %>
   </div>
