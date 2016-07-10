@@ -2,9 +2,9 @@
 <dl class="dl-horizontal">
 <dt>ブロックNo</dt><dd><%= @room.block_no %></dd>
 <dt>集合場所</dt><dd><%= @room.block_place %></dd>
-<dt>集合時刻</dt><dd><%= @room.meeting_time %></dd>
-<dt>クエスト開始</dt><dd><%= @room.quest_start_time %></dd>
-<dt>クエスト終了<dd><%= @room.quest_end_time %></dd>
+<dt>集合時刻</dt><dd><%= @room.meeting_time.strftime('%m月%d日 %H:%M') %></dd>
+<dt>クエスト開始</dt><dd><%= @room.quest_start_time.strftime('%m月%d日 %H:%M') %></dd>
+<dt>クエスト終了<dd><%= @room.quest_end_time.strftime('%m月%d日 %H:%M') %></dd>
 <dt>最少人数<dd><%= @room.min_player %></dd>
 <dt>最大人数<dd><%= @room.max_player %></dd>
 <dt>部屋のパスワード<dd><%= @room.room_pass %></dd>
@@ -12,7 +12,7 @@
 <div class="panel panel-default">
   <div class="panel-heading">詳細説明</div>
   <div class="panel-body">
-    <%= @room.description.nil? ? '未入力' : simple_format(@room.description) %> 
+    <%= @room.description.blank? ? '未入力' : simple_format(@room.description) %> 
   </div>
 </div>
 
