@@ -3,9 +3,14 @@
 <ul class="list-group">
 <% @rooms.each do |room| %>
   <li class="list-group-item">
-  <%= room.name %>
-  <%= link_to '詳細を確認', room %>
-  <%= link_to '削除', room, method: :delete, data: { confirm: '固定部屋を削除しますか？' } %>
+    <div class="row">
+      <div class="col-md-7"><%= room.name %></div>
+      <div class="col-md-2"><%= room.quest_start_time.strftime('%m月%d日 %H:%M') + "開始" %></div>
+      <div class="col-md-2"><%= link_to '詳細を確認', room %></div>
+      <div class="col-md-1">
+        <%= link_to '削除', room, method: :delete, class: "btn active btn-danger btn-xs", data: { confirm: '固定部屋を削除しますか？' } %>
+      </div>
+    </div>
   </li>
 <% end %>
 </ul>

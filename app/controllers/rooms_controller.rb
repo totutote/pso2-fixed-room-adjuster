@@ -1,6 +1,6 @@
 class RoomsController < ApplicationController
   def index
-    @rooms = Room.all
+    @rooms = Room.all.order(quest_start_time: :desc)
   end
 
   def new
