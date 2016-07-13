@@ -53,3 +53,6 @@ gem 'rails_12factor', group: :production
 
 #view library
 gem 'bootstrap-sass', '~> 3.3.0'
+
+#Other service librarys
+gem 'google-api-client', '0.9'

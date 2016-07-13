@@ -40,3 +40,11 @@
 <h3>固定に参加する</h3>
 <%= render 'add_guest_form' %>
 
+<p>
+<% if @room.short_url.blank? %>
+<%= link_to 'このページの短縮URLを作成する', shorturl_room_path, :action => "shorturl", method: :post, class: "btn btn-info" %>
+<% else %>
+<%= "短縮URL : " + @room.short_url %></p>
+<% end %>
+</p>
+
