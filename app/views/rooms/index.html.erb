@@ -9,7 +9,7 @@
       <div class="col-md-2"><%= "参加数 : " + room.players.count.to_s + (room.max_player.blank? ? "" : "/" + room.max_player.to_s) %></div>
       <div class="col-md-2"><%= room.quest_start_time.strftime('%m月%d日 %H:%M') + "開始" %></div>
       <div class="col-md-1">
-        <%= link_to '削除', room, method: :delete, class: "btn active btn-danger btn-xs", data: { confirm: '固定部屋を削除しますか？' } %>
+        <%= link_to '削除', room, method: :delete, class: "btn btn-danger btn-xs", data: { confirm: '固定部屋を削除しますか？' } %>
       </div>
     </div>
   </li>
