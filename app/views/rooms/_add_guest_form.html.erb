@@ -1,4 +1,4 @@
-<%= form_for(@player, url: room_room_members_path(params[:id])) do |f| %>
+<%= form_for(@player, url: room_room_members_path(params[:id]), html: {role: "form"}) do |f| %>
   <div class="form-group">
   <%= f.label :player_id_name, "プレイヤーIDネーム" %><br />
     <%= f.text_field :player_id_name, :class => "form-control" %>
@@ -14,6 +14,6 @@
     </div>
   <% end %>
   <div class="actions">
-    <%= f.submit '参加登録する', :class => "btn btn-default" %>
+  <p><%= f.submit '参加登録する', :class => "btn btn-default" %></p>
   </div>
 <% end %>

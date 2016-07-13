@@ -45,6 +45,18 @@ class RoomsController < ApplicationController
     redirect_to rooms_path
   end
 
+  def shorturl
+    require 'google/apis/urlshortener_v1'
+    service = Google::Apis::UrlshortenerV1::UrlshortenerService.new
+    service.key = ENV['GOOGLE_API_KEY']
+    url_object = Google::Apis::UrlshortenerV1::Url.new
+    
+    url_object.long_url = request.protocol + request.raw_host_with_port + "/rooms/#{params[:id]}"
+    response = service.insert_url(url_object)
+    Room.find(params[:id]).update(short_url: response.id)
+    redirect_to(:back)
+  end
+
   private
 
   def room_params
