@@ -28,7 +28,7 @@
       <div class="col-md-2"><%= 'ルームリーダー可' if room_member.acceptable_room_leader %></div>
       <div class="col-md-2"><%= 'パーティーリーダー可' if room_member.acceptable_party_leader %></div> 
       <div class="col-md-1">
-        <%= link_to 'キック', room_room_member_path(room_member.id), :action => "destroy", method: :delete, class: "btn active btn-danger btn-xs",
+        <%= link_to 'キック', room_room_member_path(params[:uuid], room_member.id), :action => "destroy", method: :delete, class: "btn active btn-danger btn-xs",
         data: { confirm: room_member.player.player_id_name + 'をキックしますか？' } %>
       </div>
     </div>
@@ -47,4 +47,6 @@
 <%= "短縮URL : " + @room.short_url %></p>
 <% end %>
 </p>
+<%= link_to 'この固定を削除する', room_path(@room.uuid), method: :delete, class: "btn active btn-danger", data: { confirm: '固定部屋を削除しますか    ？' } %>
+
 
