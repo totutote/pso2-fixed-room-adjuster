@@ -1,3 +1,5 @@
+<%= javascript_include_tag "https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.12/clipboard.min.js" %>
+
 <h1><%= @room.name %> の詳細</h1>
 <dl class="dl-horizontal">
 <dt>ブロックNo</dt><dd><%= @room.block_no %></dd>
@@ -44,13 +46,21 @@
 <% page_url = @room.short_url.blank? ? @page_url : @room.short_url%>
 <div class="input-group">
   <span class="input-group-addon" id="basic-addon1">このページのURL</span>
-  <input class="form-control" aria-label="This page URI" value="<%= page_url %>" type="text">
+  <input class="form-control" aria-label="This page URI" value="<%= page_url %>" type="text" id="pageurl">
   <div class="input-group-btn">
-    <%= link_to '>>URL短縮<<', shorturl_room_path, :action => "shorturl", method: :post, class: "btn btn-info" %>
-    <button type="button" class="btn btn-default" aria-expanded="false">クリップボードにコピー</button>
+    <%= link_to '>>URL短縮<<', shorturl_room_path, :action => "shorturl", method: :post, class: "btn btn-info cpy-btn" %>
+    <button type="button" class="btn btn-default cpy-btn" data-clipboard-target="#pageurl" aria-expanded="false">クリップボードにコピー</button>
   </div>
 </div>
 </p>
 <%= link_to 'この固定を削除する', room_path(@room.uuid), method: :delete, class: "btn btn-danger", data: { confirm: '固定部屋を削除しますか    ？' } %>
 
-
+<script>
+var clipboard = new Clipboard('.cpy-btn');
+clipboard.on('success', function(e) {
+    console.log(e);
+    });
+clipboard.on('error', function(e) {
+    console.log(e);
+    });
+</script>
