@@ -1,9 +1,9 @@
-<%= form_for(@player, url: room_room_members_path(params[:id]), html: {role: "form"}) do |f| %>
+<%= form_for(@player, url: room_room_members_path(params[:uuid]), html: {role: "form"}) do |f| %>
   <div class="form-group">
   <%= f.label :player_id_name, "プレイヤーIDネーム" %><br />
     <%= f.text_field :player_id_name, :class => "form-control" %>
   </div>
-  <%= fields_for @room_member, room_room_members_path(params[:id]) do |c| %>
+  <%= fields_for @room_member, room_room_members_path(params[:uuid]) do |c| %>
     <div class="checkbox">
       <%= c.check_box :acceptable_room_leader %>
       <%= c.label :acceptable_room_leader ,'ルームリーダー引受可能' %>

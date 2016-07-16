@@ -7,7 +7,6 @@ module Rooms
 
     def execute
       @room.update(params)
-      @room.save
     end
 
   end

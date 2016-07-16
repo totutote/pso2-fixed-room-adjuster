@@ -1,3 +1,5 @@
+<%= javascript_include_tag "https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.12/clipboard.min.js" %>
+
 <h1><%= @room.name %> の詳細</h1>
 <dl class="dl-horizontal">
 <dt>ブロックNo</dt><dd><%= @room.block_no %></dd>
@@ -16,7 +18,7 @@
   </div>
 </div>
 
-<%= link_to '編集する', edit_room_path, :action => "edit", class: "btn active btn-default" %>
+<%= link_to '編集する', edit_room_path, :action => "edit", class: "btn btn-default" %>
 
 <% unless @room.players.empty? %>
 <h2>現在の参加メンバー</h2>
@@ -28,7 +30,7 @@
       <div class="col-md-2"><%= 'ルームリーダー可' if room_member.acceptable_room_leader %></div>
       <div class="col-md-2"><%= 'パーティーリーダー可' if room_member.acceptable_party_leader %></div> 
       <div class="col-md-1">
-        <%= link_to 'キック', room_room_member_path(room_member.id), :action => "destroy", method: :delete, class: "btn active btn-danger btn-xs",
+        <%= link_to 'キック', room_room_member_path(params[:uuid], room_member.id), :action => "destroy", method: :delete, class: "btn active btn-danger btn-xs",
         data: { confirm: room_member.player.player_id_name + 'をキックしますか？' } %>
       </div>
     </div>
@@ -41,10 +43,29 @@
 <%= render 'add_guest_form' %>
 
 <p>
-<% if @room.short_url.blank? %>
-<%= link_to 'このページの短縮URLを作成する', shorturl_room_path, :action => "shorturl", method: :post, class: "btn btn-info" %>
-<% else %>
-<%= "短縮URL : " + @room.short_url %></p>
-<% end %>
+<% page_url = @room.short_url.blank? ? @page_url : @room.short_url%>
+<div class="input-group">
+  <span class="input-group-addon" id="basic-addon1">このページのURL</span>
+  <input class="form-control" aria-label="This page URI" value="<%= page_url %>" type="text" id="pageurl">
+  <div class="input-group-btn">
+    <%= link_to '>>URL短縮<<', shorturl_room_path, :action => "shorturl", method: :post, class: "btn btn-info cpy-btn" %>
+    <button type="button" class="btn btn-default cpy-btn" data-clipboard-target="#pageurl" data-toggle="cpy-tooltip" data-title="Copy to clipboard" data-placement="bottom" aria-expanded="false" id="cpy-to-clip">クリップボードにコピー</button>
+  </div>
+</div>
 </p>
 
+<script>
+var clipboard = new Clipboard('.cpy-btn');
+$('[data-toggle="cpy-tooltip"]').tooltip();
+clipboard.on('success', function(e) {
+    console.log(e);
+    $('[data-toggle="cpy-tooltip"]').attr("data-original-title", "Copied!").tooltip('fixTitle').tooltip("show");
+    });
+clipboard.on('error', function(e) {
+    console.log(e);
+    $('[data-toggle="cpy-tooltip"]').attr("data-original-title", "Error!").tooltip('fixTitle').tooltip("show");
+    });
+$('#cpy-to-clip').on('hidden.bs.tooltip', function () {
+    $('#cpy-to-clip').attr("data-original-title", "Copy to clipboard");
+});
+</script>
