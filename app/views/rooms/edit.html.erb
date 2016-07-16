@@ -1,5 +1,7 @@
 <h1>固定の編集</h1>
-<%= render 'create_form' %>
+<%= form_for(@room, url: room_path(@room.uuid), html: {role: "form"}) do |f| %>
+<%= render 'create_form', f: f %>
+<% end %>
 
 <h3>固定の削除</h3>
 <p>
