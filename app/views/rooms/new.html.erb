@@ -1,3 +1,5 @@
 <h1>固定の新規作成</h1>
-<%= render 'create_form' %>
+<%= form_for(@room, html: {role: "form"}) do |f| %>
+<%= render 'create_form', f: f %>
+<% end %>
 <div class="alert alert-danger" role="alert">作成から<%= @keep_old_room_days %>日で順次削除されます。</div>
