@@ -49,7 +49,7 @@
   <input class="form-control" aria-label="This page URI" value="<%= page_url %>" type="text" id="pageurl">
   <div class="input-group-btn">
     <%= link_to '>>URL短縮<<', shorturl_room_path, :action => "shorturl", method: :post, class: "btn btn-info cpy-btn" %>
-    <button type="button" class="btn btn-default cpy-btn" data-clipboard-target="#pageurl" aria-expanded="false">クリップボードにコピー</button>
+    <button type="button" class="btn btn-default cpy-btn" data-clipboard-target="#pageurl" data-toggle="cpy-tooltip" data-title="Copy to clipboard" data-placement="bottom" aria-expanded="false" id="cpy-to-clip">クリップボードにコピー</button>
   </div>
 </div>
 </p>
@@ -57,10 +57,16 @@
 
 <script>
 var clipboard = new Clipboard('.cpy-btn');
+$('[data-toggle="cpy-tooltip"]').tooltip();
 clipboard.on('success', function(e) {
     console.log(e);
+    $('[data-toggle="cpy-tooltip"]').attr("data-original-title", "Copied!").tooltip('fixTitle').tooltip("show");
     });
 clipboard.on('error', function(e) {
     console.log(e);
+    $('[data-toggle="cpy-tooltip"]').attr("data-original-title", "Error!").tooltip('fixTitle').tooltip("show");
     });
+$('#cpy-to-clip').on('hidden.bs.tooltip', function () {
+    $('#cpy-to-clip').attr("data-original-title", "Copy to clipboard");
+});
 </script>
