@@ -1,2 +1,7 @@
 <h1>固定の編集</h1>
 <%= render 'create_form' %>
+
+<h3>固定の削除</h3>
+<p>
+<%= link_to 'この固定を削除する', room_path(@room.uuid), method: :delete, class: "btn btn-danger", data: { confirm: '固定を削除しますか？' } %>
+</p>

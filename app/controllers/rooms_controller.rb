@@ -1,10 +1,19 @@
 class RoomsController < ApplicationController
+  before_action :destroy_old_rooms, only: :create  
+
+  KEEP_OLD_ROOM_DAYS = 7
+  
   def index
     @rooms = Room.where.not(is_hidden_page: true).order(quest_start_time: :desc)
   end
 
   def new
     @room = Room.new
+    @keep_old_room_days = KEEP_OLD_ROOM_DAYS
+  end
+
+  def destroy_old_rooms
+    ::Rooms::DestroyOldService.new(KEEP_OLD_ROOM_DAYS).execute
   end
 
   def create
@@ -38,12 +47,11 @@ class RoomsController < ApplicationController
 
   def destroy
     room_id = Room.where(uuid: params[:uuid]).first.id
-    rooms = RoomMember.where(room_id: room_id)
-    rooms.each do |room|
-      room.player.destroy if room.player.is_guest_user
+    room_members = RoomMember.where(room_id: room_id)
+    room_members.each do |room_member|
+      room_member.player.destroy if room_member.player.is_guest_user
     end
-    @room = Room.find(room_id)
-    @room.destroy
+    Room.destroy(room_id)
     redirect_to rooms_path
   end
 
