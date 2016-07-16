@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 20160714132611) do
     t.text     "description"
     t.string   "short_url"
     t.boolean  "is_hidden_page"
-    t.string   "uuid",                 limit: 32
+    t.string   "uuid",                 limit: 73
   end
 
   create_table "test_rooms", force: :cascade do |t|
