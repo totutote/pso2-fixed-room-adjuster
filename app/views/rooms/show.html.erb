@@ -26,7 +26,7 @@
 <% unless @room.players.empty? %>
 <h2>現在の参加メンバー</h2>
 <ol class="list-group">
-  <% @room.room_members.each_with_index do |room_member, i| %>
+  <% @room.room_members.order(:id).each_with_index do |room_member, i| %>
     <li class="list-group-item">
     <div class="row">
       <div class="col-md-7"><%= "#{h(i + 1)}. " + room_member.player.player_id_name %></div>
