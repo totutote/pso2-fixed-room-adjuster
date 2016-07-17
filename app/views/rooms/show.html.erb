@@ -53,7 +53,7 @@
     <div class="panel <%= party_index == 1 ? "panel-primary" : "panel-info" %>">
       <div class="panel-heading"><%= "パーティー " + party_index.to_s %></div>
       <ul class="list-group">
-      <% @room.room_members.where(room_number: room_index, party_number: party_index).order("is_room_leader DESC", "is_party_leader DESC").each do |member| %>
+      <% @room.room_members.where(room_number: room_index, party_number: party_index).order("is_room_leader IS NULL, is_room_leader DESC", "is_party_leader IS NULL, is_party_leader DESC").each do |member| %>
         <li class="list-group-item">
         <%= member.player.player_id_name %>
         <% if member.is_room_leader %><span class="label label-primary">RM Leader</span>
