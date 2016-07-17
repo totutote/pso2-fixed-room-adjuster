@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160714132611) do
+ActiveRecord::Schema.define(version: 20160716135244) do
 
   create_table "players", force: :cascade do |t|
     t.string   "player_id_name"
@@ -28,6 +28,10 @@ ActiveRecord::Schema.define(version: 20160714132611) do
     t.datetime "updated_at",              null: false
     t.boolean  "acceptable_room_leader"
     t.boolean  "acceptable_party_leader"
+    t.integer  "room_number"
+    t.integer  "party_number"
+    t.boolean  "is_room_leader"
+    t.boolean  "is_party_leader"
   end
 
   create_table "rooms", force: :cascade do |t|
