@@ -14,10 +14,9 @@ module RoomMembers
         room_max_player = @room.max_player
       end
       rm_ld_cands = @room.room_members.where(acceptable_room_leader: true).limit(room_count).to_a
-      pt_ld_cands = @room.room_members.where(acceptable_party_leader: true).where.not(id: candidate_ids(rm_ld_cands)).limit(room_count * 4 - rm_ld_cands.count).to_a
+      pt_ld_cands = @room.room_members.where(acceptable_party_leader: true).where.not(id: candidate_ids(rm_ld_cands)).limit(room_count * 3 - rm_ld_cands.count).to_a
       nm_member_cands = @room.room_members.where.not(id: (candidate_ids(rm_ld_cands) + candidate_ids(pt_ld_cands))).limit(room_max_player - (rm_ld_cands.count + pt_ld_cands.count)).to_a
       max_room_member_num = ((rm_ld_cands.count + pt_ld_cands.count + nm_member_cands.count) / room_count.to_f).ceil
-
       rooms = []
       (1..room_count).each do |i|
         rm_ldc, pt_ldc, nm_memc = shift_num_of_candidates(rm_ld_cands, pt_ld_cands, nm_member_cands, room_count, max_room_member_num)
@@ -40,7 +39,7 @@ module RoomMembers
     def shift_num_of_candidates(rm_lds, pt_lds, nm_mems, room_count, max_room_member_num)
       pt_count = (max_room_member_num.to_f / 4).ceil
       rm_ld_r = rm_lds.shift
-      pt_ld_count = rm_ld_r.nil? ? 0 : 1
+      pt_ld_count = rm_ld_r.blank? ? 0 : 1
       pt_lds_r = pt_lds.shift(pt_count - pt_ld_count)
       pt_ld_count = pt_ld_count + pt_lds.count
       nm_mem_r = nm_mems.shift(max_room_member_num - pt_ld_count)
