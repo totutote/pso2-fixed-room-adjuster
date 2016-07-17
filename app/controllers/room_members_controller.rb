@@ -16,18 +16,18 @@ class RoomMembersController < ApplicationController
   end
 
   def organize
-    status = ::RoomMembers::OrganizeService.new(Room.find(params[:room_id])).execute
+    status = ::RoomMembers::OrganizeService.new(Room.where(uuid: params[:room_uuid]).first).execute
     if status
-      redirect_to room_path, notice: "編成しました。"
+      redirect_to room_path(params[:room_uuid]), notice: "編成しました。"
     else
-      redirect_to room_path, notice: "編成できませんでした。"
+      redirect_to room_path(params[:room_uuid]), notice: "編成できませんでした。"
     end
   end
 
   def reset_organize
-    room = Room.where(uuid: params[room_uuid]).first
-    RoomMember.where(room_id: room.id).update(room_number: nil, party_number: nil, is_room_leader: nil, is_party_leader: nil)
-    redirect_to room_path, notice: "リセットしました。"
+    room = Room.where(uuid: params[:room_uuid]).first
+    room.room_members.update(room_number: nil, party_number: nil, is_room_leader: nil, is_party_leader: nil)
+    redirect_to room_path(params[:room_uuid]), notice: "リセットしました。"
   end
 
   private

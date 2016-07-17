@@ -1,6 +1,9 @@
 <%= javascript_include_tag "https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.12/clipboard.min.js" %>
 
+<div class="page-header">
 <h1><%= @room.name %> の詳細</h1>
+</div>
+
 <dl class="dl-horizontal">
 <dt>ブロックNo</dt><dd><%= @room.block_no %></dd>
 <dt>集合場所</dt><dd><%= @room.block_place %></dd>
@@ -30,27 +33,47 @@
       <div class="col-md-2"><%= 'ルームリーダー可' if room_member.acceptable_room_leader %></div>
       <div class="col-md-2"><%= 'パーティーリーダー可' if room_member.acceptable_party_leader %></div> 
       <div class="col-md-1">
-        <%= link_to 'キック', room_room_member_path(params[:uuid], room_member.id), :action => "destroy", method: :delete, class: "btn active btn-danger btn-xs",
+        <%= link_to 'キック', room_room_member_path(params[:uuid], room_member.id), :action => "destroy", method: :delete, class: "btn btn-danger btn-xs",
         data: { confirm: room_member.player.player_id_name + 'をキックしますか？' } %>
       </div>
     </div>
     </li>
   <% end %>
 </ol>
+<%= link_to '以上のメンバーでPT編成', organize_room_room_members_path(@room.uuid), method: :put, class: "btn btn-primary" %>
+<%= link_to 'PT編成を削除', reset_organize_room_room_members_path(@room.uuid), method: :patch, class: "btn btn-danger" %>
+
+<h3>PT編成</h3>
+<% (1..@room.room_members.select(:room_number).uniq.count).each do |room_index| %>
+<div class="well well-sm">
+<h4><%= "ルーム " + room_index.to_s %></h4>
+<div class="row">
+  <% (1..@room.room_members.where(room_number: room_index).select(:party_number).uniq.count).each do |party_index| %>
+    <div class="col-md-4">
+    <div class="panel <%= party_index == 1 ? "panel-primary" : "panel-info" %>">
+      <div class="panel-heading"><%= "パーティー " + party_index.to_s %></div>
+      <ul class="list-group">
+      <% @room.room_members.where(room_number: room_index, party_number: party_index).order("is_room_leader DESC", "is_party_leader DESC").each do |member| %>
+        <li class="list-group-item">
+        <%= member.player.player_id_name %>
+        <% if member.is_room_leader %><span class="label label-primary">RM Leader</span>
+        <% else %>
+          <% if member.is_party_leader %><span class="label label-default">PT Leader</span><% end %> 
+        <% end %>
+        </li>
+      <% end %>
+      </ul>
+    </div>
+    </div>
+  <% end %>
+</div>
+</div>
 <% end %>
 
-<%= link_to '以上のメンバーでPT編成', organize_room_room_members_path(@room.uuid), action: :organize, method: :put, class: "btn btn-primary" %>
-<%=  link_to 'PT編成をリセット', reset_organize_room_room_members_path(@room.uuid), action: :reset_organize, method: :delete, class: "btn btn-danger" %>
+<% end %>
 
 <h3>固定に参加する</h3>
 <%= render 'add_guest_form' %>
-
-<h3>PT編成</h3>
-<ul class="list-group">
-<% @room.room_members.each_with_index do |room_member, i| %>
-  <li class="list-group-item"><%= room_member.player.player_id_name %><%= " room_number: " + room_member.room_number.to_s %><%= " party_number: " + room_member.party_number.to_s %></li>
-<% end %>
-</ul>
 
 <p>
 <% page_url = @room.short_url.blank? ? @page_url : @room.short_url%>

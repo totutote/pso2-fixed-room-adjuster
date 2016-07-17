@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     resources :room_members do
       collection do
         put 'organize'
-        delete 'reset_organize'
+        patch 'reset_organize'
       end
     end
   end
