@@ -8,8 +8,8 @@ module RoomMembers
       @room.room_members.update(room_number: nil, party_number: nil, is_room_leader: nil, is_party_leader: nil)
       if @room.max_player.blank?
         total_member_count = @room.room_members.count
-        room_count = room_count(total_member)
-        room_max_player = total_member_count > 12 ? 12 : total_member_count
+        room_count = room_count(total_member_count)
+        room_max_player = total_member_count
         total_pt_num = (total_member_count.to_f / 4).ceil
       else 
         total_member_count = @room.max_player > @room.room_members.count ? @room.room_members.count : @room.max_player
