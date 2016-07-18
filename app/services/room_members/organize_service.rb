@@ -7,15 +7,19 @@ module RoomMembers
     def execute
       @room.room_members.update(room_number: nil, party_number: nil, is_room_leader: nil, is_party_leader: nil)
       if @room.max_player.blank?
-        room_count = ((@room.room_members.count) / 12.to_f).ceil
-        room_max_player = @room.room_members.count
+        total_member_count = @room.room_members.count
+        room_count = room_count(total_member)
+        room_max_player = total_member_count > 12 ? 12 : total_member_count
+        total_pt_num = (total_member_count.to_f / 4).ceil
       else 
-        room_count = ((@room.max_player) / 12.to_f).ceil
+        total_member_count = @room.max_player > @room.room_members.count ? @room.room_members.count : @room.max_player
+        room_count = room_count(total_member_count)
         room_max_player = @room.max_player
+        total_pt_num = (total_member_count.to_f / 4).ceil
       end
-      rm_ld_cands = @room.room_members.where(acceptable_room_leader: true).limit(room_count).to_a
-      pt_ld_cands = @room.room_members.where(acceptable_party_leader: true).where.not(id: candidate_ids(rm_ld_cands)).limit(room_count * 3 - rm_ld_cands.count).to_a
-      nm_member_cands = @room.room_members.where.not(id: (candidate_ids(rm_ld_cands) + candidate_ids(pt_ld_cands))).limit(room_max_player - (rm_ld_cands.count + pt_ld_cands.count)).to_a
+      rm_ld_cands = @room.room_members.where(acceptable_room_leader: true).order(:id).limit(room_count).to_a
+      pt_ld_cands = @room.room_members.where(acceptable_party_leader: true).where.not(id: candidate_ids(rm_ld_cands)).order(:id).limit(total_pt_num - rm_ld_cands.count).to_a
+      nm_member_cands = @room.room_members.where.not(id: (candidate_ids(rm_ld_cands) + candidate_ids(pt_ld_cands))).order(:id).limit(room_max_player - (rm_ld_cands.count + pt_ld_cands.count)).to_a
       max_room_member_num = ((rm_ld_cands.count + pt_ld_cands.count + nm_member_cands.count) / room_count.to_f).ceil
       rooms = []
       (1..room_count).each do |i|
@@ -27,6 +31,10 @@ module RoomMembers
     end
 
     private
+
+    def room_count(total_member_count)
+      (total_member_count / 12.to_f).ceil
+    end
 
     def initialize_parties
       {1 => [], 2 => [], 3 => []}
@@ -46,7 +54,6 @@ module RoomMembers
       [rm_ld_r, pt_lds_r, nm_mem_r]
     end
 
-
     def organize_one_room(room_num, rm_ld, pt_lds, nm_members)
        parties = initialize_parties
        if rm_ld
@@ -54,7 +61,7 @@ module RoomMembers
          parties[1].push(rm_ld)
        end
        plus_member_number = 0
-       plus_member_number = 1 if rm_ld
+       plus_member_number = 1 unless rm_ld.blank?
        pt_lds.each_with_index do |pt_ld, i|
          pt_ld.is_room_leader = true if (1 + plus_member_number + i) == 1
          pt_ld.is_party_leader = true
