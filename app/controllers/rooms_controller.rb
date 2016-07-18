@@ -70,7 +70,7 @@ class RoomsController < ApplicationController
   private
 
   def room_params
-    params.require(:room).permit(:name, :room_pass, :min_player, :max_player,
+    params.require(:room).permit(:name, :ship_number, :room_pass, :min_player, :max_player,
                                  :block_no, :block_place, :recruitment_deadline,
                                  :meeting_time, :quest_start_time, :quest_end_time,
                                  :is_hidden_page, :description)

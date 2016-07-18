@@ -9,6 +9,19 @@ class RoomMembersController < ApplicationController
     end
   end
 
+  def edit
+    @room_member = RoomMember.where(id: params[:id]).first
+  end
+
+  def update
+    status = ::RoomMembers::UpdateService.new(guest_player_params, room_member_params, RoomMember.find(params[:id])).execute
+    if status
+      redirect_to room_path(params[:room_uuid]), notice: "編集しました。"
+    else
+      render 'edit'
+    end 
+  end
+
   def destroy
     @room_member = RoomMember.find(params[:id])
     @room_member.destroy

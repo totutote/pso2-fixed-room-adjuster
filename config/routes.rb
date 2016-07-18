@@ -5,7 +5,6 @@ Rails.application.routes.draw do
     member do
       post 'shorturl'
     end
-    resources :room_members, only: [:create, :destroy]
     resources :room_members do
       collection do
         put 'organize'
