@@ -4,8 +4,12 @@
     <%= f.text_field :name, :class => "form-control" %>
   </div>
   <div class="field">
+    <%= f.label :ship_number, "Ship" %><br />
+    <%= f.number_field :ship_number, in: 1..10, :class => "form-control" %>
+  </div>  
+  <div class="field">
     <%= f.label :block_no, "ブロックNo" %><br />
-    <%= f.number_field :block_no, in: 1..299, :class => "form-control" %>
+    <%= f.number_field :block_no, in: 1..599, :class => "form-control" %>
   </div> 
   <div class="field">
     <%= f.label :block_place, "集合場所" %><br />

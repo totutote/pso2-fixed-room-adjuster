@@ -5,6 +5,7 @@
 </div>
 
 <dl class="dl-horizontal">
+<dt>Ship</dt><dd><%= @room.ship_number %></dd>
 <dt>ブロックNo</dt><dd><%= @room.block_no %></dd>
 <dt>集合場所</dt><dd><%= @room.block_place %></dd>
 <dt>集合時刻</dt><dd><%= @room.meeting_time.strftime('%m月%d日 %H:%M') %></dd>
@@ -33,14 +34,13 @@
       <div class="col-md-2"><%= 'ルームリーダー可' if room_member.acceptable_room_leader %></div>
       <div class="col-md-2"><%= 'パーティーリーダー可' if room_member.acceptable_party_leader %></div> 
       <div class="col-md-1">
-        <%= link_to 'キック', room_room_member_path(params[:uuid], room_member.id), :action => "destroy", method: :delete, class: "btn btn-danger btn-xs",
-        data: { confirm: room_member.player.player_id_name + 'をキックしますか？' } %>
+        <%= link_to '編集', edit_room_room_member_path(params[:uuid], room_member.id), :action => "edit", method: :get, class: "btn btn-default btn-xs" %>
       </div>
     </div>
     </li>
   <% end %>
 </ol>
-<%= link_to '以上のメンバーでPT編成', organize_room_room_members_path(@room.uuid), method: :put, class: "btn btn-primary" %>
+<%= link_to '以上のメンバーでPT編成', organize_room_room_members_path(@room.uuid), action: :organize, method: :put, class: "btn btn-primary" %>
 <%= link_to 'PT編成を削除', reset_organize_room_room_members_path(@room.uuid), method: :patch, class: "btn btn-danger" %>
 
 <% (1..@room.room_members.select(:room_number).uniq.count).each do |room_index| %>
@@ -73,7 +73,9 @@
 <% end %>
 
 <h3>固定に参加する</h3>
-<%= render 'add_guest_form' %>
+<%= form_for(@player, url: room_room_members_path(params[:uuid]), html: {role: "form"}) do |f| %>
+<%= render 'add_guest_form', f: f, room_uuid: params[:uuid] %>
+<% end %>
 
 <p>
 <% page_url = @room.short_url.blank? ? @page_url : @room.short_url%>
