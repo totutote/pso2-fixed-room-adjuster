@@ -21,9 +21,16 @@ class GroupsController < ApplicationController
   end
 
   def edit
+    @group = Group.where(uuid: params[:uuid]).first
   end
 
   def update
+    status = ::Groups::UpdateService.new(Group.where(uuid: params[:uuid]), group_params).execute
+    if status
+      redirect_to :action => "show", notice: "編集しました。"
+    else
+      render 'edit'
+    end 
   end
 
   def destroy

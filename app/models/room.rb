@@ -20,6 +20,7 @@ class Room < ApplicationRecord
 
   def group_uuid=(uuid)
     @group_uuid = uuid
+    return if uuid == ''
     group = Group.where(uuid: uuid).first
     self.group_id = group ? group.id : nil
   end

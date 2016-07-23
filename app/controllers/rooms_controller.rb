@@ -22,7 +22,6 @@ class RoomsController < ApplicationController
     if @room.saved?
       redirect_to room_path(@room.uuid), notice: "'#{@room.name}' を作成しました。"
     else
-      p @room.errors
       render 'new'
     end
   end
