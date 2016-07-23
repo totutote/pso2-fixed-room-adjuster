@@ -11,7 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160718051147) do
+ActiveRecord::Schema.define(version: 20160723071716) do
+
+  create_table "groups", force: :cascade do |t|
+    t.string  "uuid",           limit: 73
+    t.string  "name"
+    t.text    "description"
+    t.boolean "is_hidden_page"
+  end
 
   create_table "players", force: :cascade do |t|
     t.string   "player_id_name"
@@ -52,6 +59,7 @@ ActiveRecord::Schema.define(version: 20160718051147) do
     t.boolean  "is_hidden_page"
     t.string   "uuid",                 limit: 73
     t.integer  "ship_number"
+    t.integer  "group_id"
   end
 
   create_table "test_rooms", force: :cascade do |t|

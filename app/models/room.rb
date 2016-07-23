@@ -8,6 +8,8 @@ class Room < ApplicationRecord
   has_many :room_members
   has_many :players, through: :room_members, dependent: :destroy
 
+  belongs_to :group
+
   def saved?
     id && persisted?
   end
