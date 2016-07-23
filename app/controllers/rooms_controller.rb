@@ -9,6 +9,7 @@ class RoomsController < ApplicationController
 
   def new
     @room = Room.new
+    @room.group_uuid = params[:group_uuid] if params[:group_uuid]
     @keep_old_room_days = KEEP_OLD_ROOM_DAYS
   end
 
@@ -21,6 +22,7 @@ class RoomsController < ApplicationController
     if @room.saved?
       redirect_to room_path(@room.uuid), notice: "'#{@room.name}' を作成しました。"
     else
+      p @room.errors
       render 'new'
     end
   end
@@ -73,7 +75,7 @@ class RoomsController < ApplicationController
     params.require(:room).permit(:name, :ship_number, :room_pass, :min_player, :max_player,
                                  :block_no, :block_place, :recruitment_deadline,
                                  :meeting_time, :quest_start_time, :quest_end_time,
-                                 :is_hidden_page, :description)
+                                 :is_hidden_page, :description, :group_uuid)
   end
 
   def page_url

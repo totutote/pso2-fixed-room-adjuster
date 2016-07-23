@@ -1,18 +1,4 @@
 Rails.application.routes.draw do
-  get 'groups/index'
-
-  get 'groups/new'
-
-  get 'groups/create'
-
-  get 'groups/show'
-
-  get 'groups/edit'
-
-  get 'groups/update'
-
-  get 'groups/destroy'
-
   root 'rooms#index'
 
   resources :rooms, param: :uuid do
@@ -27,6 +13,6 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :groops, param: :uuid
+  resources :groups, param: :uuid
 
 end

@@ -8,10 +8,20 @@ class Room < ApplicationRecord
   has_many :room_members
   has_many :players, through: :room_members, dependent: :destroy
 
-  belongs_to :group
+  belongs_to :group, optional: true
 
   def saved?
     id && persisted?
+  end
+
+  def group_uuid
+    @group_uuid
+  end
+
+  def group_uuid=(uuid)
+    @group_uuid = uuid
+    group = Group.where(uuid: uuid).first
+    self.group_id = group ? group.id : nil
   end
 
   private 

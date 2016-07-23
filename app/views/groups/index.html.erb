@@ -1,2 +1,14 @@
-<h1>Groups#index</h1>
-<p>Find me in app/views/groups/index.html.erb</p>
+<h2>グループ一覧</h2>
+
+<ul class="list-group">
+<% @groups.each do |group| %>
+  <li class="list-group-item">
+    <div class="row">
+      <div class="col-md-6"><%= group.name %></div>
+      <div class="col-md-2"><%= link_to '詳細を確認', group_path(group.uuid) %></div>
+    </div>
+  </li>
+<% end %>
+</ul>
+
+<%= link_to '新しいグループを作成する', new_group_path %>

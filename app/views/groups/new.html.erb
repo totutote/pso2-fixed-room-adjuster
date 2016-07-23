@@ -1,2 +1,4 @@
-<h1>Groups#new</h1>
-<p>Find me in app/views/groups/new.html.erb</p>
+<h1>グループの新規作成</h1>
+<%= form_for(@group, html: {role: "form"}) do |f| %>
+<%= render 'create_form', f: f %>
+<% end %>

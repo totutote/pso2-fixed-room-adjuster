@@ -45,9 +45,9 @@
   </div>
   <div class="checkbox">
     <%= f.check_box :is_hidden_page %>
-    <%= f.label :is_hidden_page, 'トップページの一覧に表示しない' %>
+    <%= f.label :is_hidden_page, '固定一覧に表示しない' %>
   </div>
-  </div>
+  <%= f.hidden_field :group_uuid %>
   <div class="actions">
     <p><%= f.submit :class => "btn btn-default" %></p>
   </div>

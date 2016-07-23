@@ -5,6 +5,8 @@ class CreateGroup < ActiveRecord::Migration[5.0]
       t.string :name
       t.text :description
       t.boolean :is_hidden_page
+
+      t.timestamps
     end
   end
 end
