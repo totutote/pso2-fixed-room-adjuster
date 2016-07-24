@@ -1,0 +1,30 @@
+<div class="page-header">
+<h1>グループ: <%= @group.name %></h1>
+</div>
+<div class="panel panel-default">
+  <div class="panel-heading">詳細説明</div>
+  <div class="panel-body">
+    <%= @group.description.blank? ? '未入力' : simple_format(@group.description) %> 
+  </div>
+</div>
+
+<p><%= link_to '編集する', edit_group_path, class: "btn btn-default" %></p>
+
+<% unless @group.rooms.empty? %>
+<h2>グループで募集中の固定</h2>
+<ul class="list-group">
+<% @group.rooms.order("created_at DESC").each do |room| %>
+  <li class="list-group-item">
+    <div class="row">
+      <div class="col-md-6"><%= room.name %></div>
+      <div class="col-md-2"><%= link_to '詳細を確認', room_path(room.uuid) %></div>
+      <div class="col-md-2"><%= "参加数 : " + room.players.count.to_s + (room.max_player.blank? ? "" : "/" + room.max_player.to_s) %></div>
+      <div class="col-md-2"><%= room.quest_start_time.strftime('%m月%d日 %H:%M') + "開始" %></div>
+    </div>
+  </li>
+<% end %>
+</ul>
+<% end %>
+
+<p><%= link_to 'シートを作成する', new_room_path(group_uuid: @group.uuid), class: "btn btn-default" %></p>
+

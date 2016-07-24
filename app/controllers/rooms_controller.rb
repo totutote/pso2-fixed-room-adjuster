@@ -9,6 +9,7 @@ class RoomsController < ApplicationController
 
   def new
     @room = Room.new
+    @room.group_uuid = params[:group_uuid] if params[:group_uuid]
     @keep_old_room_days = KEEP_OLD_ROOM_DAYS
   end
 
@@ -46,12 +47,7 @@ class RoomsController < ApplicationController
   end
 
   def destroy
-    room_id = Room.where(uuid: params[:uuid]).first.id
-    room_members = RoomMember.where(room_id: room_id)
-    room_members.each do |room_member|
-      room_member.player.destroy if room_member.player.is_guest_user
-    end
-    Room.destroy(room_id)
+    Room.where(uuid: params[:uuid]).first.destroy
     redirect_to rooms_path
   end
 
@@ -73,7 +69,7 @@ class RoomsController < ApplicationController
     params.require(:room).permit(:name, :ship_number, :room_pass, :min_player, :max_player,
                                  :block_no, :block_place, :recruitment_deadline,
                                  :meeting_time, :quest_start_time, :quest_end_time,
-                                 :is_hidden_page, :description)
+                                 :is_hidden_page, :description, :group_uuid)
   end
 
   def page_url
