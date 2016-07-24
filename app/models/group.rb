@@ -1,7 +1,7 @@
 class Group < ApplicationRecord
   before_create :generate_random_id
 
-  has_many :rooms
+  has_many :rooms, :dependent => :destroy
 
   validates :name, presence: true
 

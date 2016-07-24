@@ -34,6 +34,8 @@ class GroupsController < ApplicationController
   end
 
   def destroy
+    Group.where(uuid: params[:uuid]).first.destroy
+    redirect_to groups_path
   end
 
   private

@@ -47,12 +47,7 @@ class RoomsController < ApplicationController
   end
 
   def destroy
-    room_id = Room.where(uuid: params[:uuid]).first.id
-    room_members = RoomMember.where(room_id: room_id)
-    room_members.each do |room_member|
-      room_member.player.destroy if room_member.player.is_guest_user
-    end
-    Room.destroy(room_id)
+    Room.where(uuid: params[:uuid]).first.destroy
     redirect_to rooms_path
   end
 
