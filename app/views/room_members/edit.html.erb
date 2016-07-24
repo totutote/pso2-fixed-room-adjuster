@@ -1,4 +1,6 @@
+<div class="page-header">
 <h1>参加メンバーの編集</h1>
+</div>
 
 <%= form_for(@room_member.player, url: room_room_member_path(params[:room_uuid]), html: {role: "form"}) do |f| %>
 <%= render 'rooms/add_guest_form', f: f, room_uuid: params[:room_uuid] %>

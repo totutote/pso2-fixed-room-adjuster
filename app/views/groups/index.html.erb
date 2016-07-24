@@ -1,4 +1,12 @@
-<h2>グループ一覧</h2>
+<div class="page-header">
+<div class="row">
+<div class="col-md-9"><h2>公開中のグループ</h2></div>
+<div class="col-md-3"><p><%= link_to '新規グループを作成', new_group_path, class: "btn btn-primary btn-lg", role: "button" %></p></div>
+</div>
+</div>
+
+
+<%= paginate @groups %>
 
 <ul class="list-group">
 <% @groups.each do |group| %>
@@ -11,4 +19,3 @@
 <% end %>
 </ul>
 
-<%= link_to '新しいグループを作成する', new_group_path %>
