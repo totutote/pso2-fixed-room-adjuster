@@ -1,4 +1,11 @@
-<h2>募集中の固定</h2>
+<div class="page-header">
+<div class="row">
+<div class="col-md-9"><h2>募集中の固定</h2></div>
+<div class="col-md-3"><p><%= link_to '新規シートを作成', new_room_path, class: "btn btn-primary btn-lg", role: "button" %></p></div>
+</div>
+</div>
+
+<%= paginate @rooms %>
 
 <ul class="list-group">
 <% @rooms.each do |room| %>
@@ -13,4 +20,4 @@
 <% end %>
 </ul>
 
-<%= link_to '新しいシートを作成する', new_room_path %>
+

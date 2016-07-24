@@ -4,7 +4,7 @@ class RoomsController < ApplicationController
   KEEP_OLD_ROOM_DAYS = 7
   
   def index
-    @rooms = Room.where.not(is_hidden_page: true).order(quest_start_time: :desc)
+    @rooms = Room.where.not(is_hidden_page: true).order(quest_start_time: :desc).page(params[:page])
   end
 
   def new

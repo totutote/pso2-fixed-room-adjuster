@@ -1,6 +1,6 @@
 class GroupsController < ApplicationController
   def index
-    @groups = Group.where.not(is_hidden_page: true).order(updated_at: :desc)
+    @groups = Group.where.not(is_hidden_page: true).order(updated_at: :desc).page(params[:page])
   end
 
   def new
