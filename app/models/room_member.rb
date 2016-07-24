@@ -9,6 +9,7 @@ class RoomMember < ApplicationRecord
   end
 
   def before_room_member_destroy
+    return unless self.player
     self.player.destroy if self.player.is_guest_user
   end
 
