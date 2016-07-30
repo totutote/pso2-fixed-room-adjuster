@@ -1,5 +1,17 @@
 <%= javascript_include_tag "https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.12/clipboard.min.js" %>
 
+<p>
+<% page_url = @room.short_url.blank? ? @page_url : @room.short_url%>
+<div class="input-group">
+  <span class="input-group-addon" id="basic-addon1">このページのURL</span>
+  <input class="form-control" aria-label="This page URI" value="<%= page_url %>" type="text" id="pageurl">
+  <div class="input-group-btn">
+    <%= link_to '>>URL短縮<<', shorturl_room_path, :action => "shorturl", method: :post, class: "btn btn-info cpy-btn" %>
+    <button type="button" class="btn btn-default cpy-btn" data-clipboard-target="#pageurl" data-toggle="cpy-tooltip" data-title="Copy to clipboard" data-placement="bottom" aria-expanded="false" id="cpy-to-clip">クリップボードにコピー</button>
+  </div>
+</div>
+</p>
+
 <div class="page-header">
 <h1><%= @room.name %> の詳細</h1>
 </div>
@@ -76,18 +88,6 @@
 <%= form_for(@player, url: room_room_members_path(params[:uuid]), html: {role: "form"}) do |f| %>
 <%= render 'add_guest_form', f: f, room_uuid: params[:uuid] %>
 <% end %>
-
-<p>
-<% page_url = @room.short_url.blank? ? @page_url : @room.short_url%>
-<div class="input-group">
-  <span class="input-group-addon" id="basic-addon1">このページのURL</span>
-  <input class="form-control" aria-label="This page URI" value="<%= page_url %>" type="text" id="pageurl">
-  <div class="input-group-btn">
-    <%= link_to '>>URL短縮<<', shorturl_room_path, :action => "shorturl", method: :post, class: "btn btn-info cpy-btn" %>
-    <button type="button" class="btn btn-default cpy-btn" data-clipboard-target="#pageurl" data-toggle="cpy-tooltip" data-title="Copy to clipboard" data-placement="bottom" aria-expanded="false" id="cpy-to-clip">クリップボードにコピー</button>
-  </div>
-</div>
-</p>
 
 <script>
 var clipboard = new Clipboard('.cpy-btn');
