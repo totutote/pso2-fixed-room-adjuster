@@ -13,7 +13,13 @@ module RoomMembers
       @room_member.save
       @room_member.player.player_id_name = @player_params["player_id_name"]
       @room_member.player.save
-      @room_member.player_character.update(@player_character_params)
+      if @room_member.player_character
+        @room_member.player_character.update(@player_character_params)
+      else
+        player_character = PlayerCharacter.new(@player_character_params)
+        @room_member.player.player_characters << player_character
+        @room_member.player_character = player_character
+      end
     end
   end
 end

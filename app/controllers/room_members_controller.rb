@@ -12,6 +12,7 @@ class RoomMembersController < ApplicationController
   def edit
     @room_member = RoomMember.where(id: params[:id]).first
     @player_character = @room_member.player_character
+    @player_character ||= PlayerCharacter.new
   end
 
   def update
