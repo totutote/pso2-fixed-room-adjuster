@@ -1,7 +1,33 @@
+<div class="row">
+<div class="col-xs-4">
   <div class="form-group">
-  <%= f.label :player_id_name, "プレイヤーIDネーム" %><br />
-    <%= f.text_field :player_id_name, :class => "form-control" %>
+    <%= f.label :player_id_name, "プレイヤーIDネーム", for: "player_id_name" %>
+    <%= f.text_field :player_id_name, class: "form-control", id: "player_id_name" %>
   </div>
+</div>
+<div class="col-xs-4">
+  <%= fields_for @player_character, room_room_members_path(room_uuid) do |c| %>
+    <div class="form_group">
+      <%= c.label :name ,'キャラクター名' %>
+      <%= c.text_field :name, class: "form-control" %>
+    </div>
+</div>
+<% options = options_for_select(PlayerCharacter::CLASS_LIST) %>
+<div class="col-xs-2">
+    <div class="form_group">
+      <%= c.label :name, 'メインクラス' %>
+      <%= c.select :main_class, options_for_select(PlayerCharacter::CLASS_LIST), {}, {class: "form-control"} %>
+    </div>
+</div>
+<div class="col-xs-2">
+    <div class="form_group">
+      <%= c.label :name, 'サブクラス' %>
+      <%= c.select :sub_class, options_for_select(PlayerCharacter::CLASS_LIST), {}, {class: "form-control"} %>
+    </div>
+</div>
+  <% end %> 
+</div>
+<div class="row">
   <%= fields_for @room_member, room_room_members_path(room_uuid) do |c| %>
     <div class="checkbox">
       <%= c.check_box :acceptable_room_leader %>
@@ -12,6 +38,7 @@
       <%= c.label :acceptable_party_leader, 'パーティーリーダー引受可能' %>
     </div>
   <% end %>
+</div>
   <div class="actions">
   <p><%= f.submit '登録する', :class => "btn btn-default" %></p>
   </div>
