@@ -1,8 +1,9 @@
 module RoomMembers
   class UpdateService < BaseService
-    def initialize(player_params, room_member_params, room_member)
+    def initialize(player_params, room_member_params, player_character_params, room_member)
       @player_params = player_params.dup
       @room_member_params = room_member_params.dup
+      @player_character_params = player_character_params.dup
       @room_member = room_member
     end
 
@@ -12,6 +13,13 @@ module RoomMembers
       @room_member.save
       @room_member.player.player_id_name = @player_params["player_id_name"]
       @room_member.player.save
+      if @room_member.player_character
+        @room_member.player_character.update(@player_character_params)
+      else
+        player_character = PlayerCharacter.new(@player_character_params)
+        @room_member.player.player_characters << player_character
+        @room_member.player_character = player_character
+      end
     end
   end
 end

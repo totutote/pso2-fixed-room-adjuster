@@ -1,5 +1,17 @@
 <%= javascript_include_tag "https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.12/clipboard.min.js" %>
 
+<p>
+<% page_url = @room.short_url.blank? ? @page_url : @room.short_url%>
+<div class="input-group">
+  <span class="input-group-addon" id="basic-addon1">このページのURL</span>
+  <input class="form-control" aria-label="This page URI" value="<%= page_url %>" type="text" id="pageurl">
+  <div class="input-group-btn">
+    <%= link_to '>>URL短縮<<', shorturl_room_path, :action => "shorturl", method: :post, class: "btn btn-info cpy-btn" %>
+    <button type="button" class="btn btn-default cpy-btn" data-clipboard-target="#pageurl" data-toggle="cpy-tooltip" data-title="Copy to clipboard" data-placement="bottom" aria-expanded="false" id="cpy-to-clip">クリップボードにコピー</button>
+  </div>
+</div>
+</p>
+
 <div class="page-header">
 <h1><%= @room.name %> の詳細</h1>
 </div>
@@ -30,7 +42,15 @@
   <% @room.room_members.order(:id).each_with_index do |room_member, i| %>
     <li class="list-group-item">
     <div class="row">
-      <div class="col-md-7"><%= "#{h(i + 1)}. " + room_member.player.player_id_name %></div>
+      <% player_character = room_member.player_character %>
+      <% if player_character && !(player_character.name.blank? && player_character.main_class.blank? && player_character.sub_class.blank?) %>
+        <% character_name = player_character.name.blank? ? "未定" : player_character.name %>
+        <% character_main_class = player_character.main_class.blank? ? "未定" : player_character.main_class %>
+        <% character_sub_class = player_character.sub_class.blank? ? "未定" : player_character.sub_class %>
+        <div class="col-md-7"><%= "#{h(i + 1)}. " + room_member.player.player_id_name + " / " + character_name + " (" + character_main_class + "/" + character_sub_class + ")" %></div>
+      <% else %>
+        <div class="col-md-7"><%= "#{h(i + 1)}. " + room_member.player.player_id_name %></div>
+      <% end %>
       <div class="col-md-2"><%= 'ルームリーダー可' if room_member.acceptable_room_leader %></div>
       <div class="col-md-2"><%= 'パーティーリーダー可' if room_member.acceptable_party_leader %></div> 
       <div class="col-md-1">
@@ -76,18 +96,6 @@
 <%= form_for(@player, url: room_room_members_path(params[:uuid]), html: {role: "form"}) do |f| %>
 <%= render 'add_guest_form', f: f, room_uuid: params[:uuid] %>
 <% end %>
-
-<p>
-<% page_url = @room.short_url.blank? ? @page_url : @room.short_url%>
-<div class="input-group">
-  <span class="input-group-addon" id="basic-addon1">このページのURL</span>
-  <input class="form-control" aria-label="This page URI" value="<%= page_url %>" type="text" id="pageurl">
-  <div class="input-group-btn">
-    <%= link_to '>>URL短縮<<', shorturl_room_path, :action => "shorturl", method: :post, class: "btn btn-info cpy-btn" %>
-    <button type="button" class="btn btn-default cpy-btn" data-clipboard-target="#pageurl" data-toggle="cpy-tooltip" data-title="Copy to clipboard" data-placement="bottom" aria-expanded="false" id="cpy-to-clip">クリップボードにコピー</button>
-  </div>
-</div>
-</p>
 
 <script>
 var clipboard = new Clipboard('.cpy-btn');

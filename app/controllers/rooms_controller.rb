@@ -30,6 +30,7 @@ class RoomsController < ApplicationController
     @room = Room.where(uuid: params[:uuid]).first
     @player = Player.new
     @room_member = RoomMember.new
+    @player_character = PlayerCharacter.new
     @page_url = page_url
   end
 
