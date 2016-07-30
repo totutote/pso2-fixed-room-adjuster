@@ -11,20 +11,21 @@
       <%= c.label :name ,'キャラクター名' %>
       <%= c.text_field :name, class: "form-control" %>
     </div>
-</div>
-<% options = options_for_select(PlayerCharacter::CLASS_LIST) %>
-<div class="col-xs-2">
+  </div>
+  <% main_class_options = options_for_select(PlayerCharacter::CLASS_LIST, @player_character.main_class) %>
+  <div class="col-xs-2">
     <div class="form_group">
-      <%= c.label :name, 'メインクラス' %>
-      <%= c.select :main_class, options_for_select(PlayerCharacter::CLASS_LIST), {}, {class: "form-control"} %>
+      <%= c.label :main_class, 'メインクラス' %>
+      <%= c.select :main_class, main_class_options, {}, {class: "form-control"} %>
     </div>
-</div>
-<div class="col-xs-2">
+  </div>
+  <% sub_class_options = options_for_select(PlayerCharacter::CLASS_LIST, @player_character.sub_class) %>
+  <div class="col-xs-2">
     <div class="form_group">
-      <%= c.label :name, 'サブクラス' %>
-      <%= c.select :sub_class, options_for_select(PlayerCharacter::CLASS_LIST), {}, {class: "form-control"} %>
+      <%= c.label :sub_class, 'サブクラス' %>
+      <%= c.select :sub_class, sub_class_options, {}, {class: "form-control"} %>
     </div>
-</div>
+  </div>
   <% end %> 
 </div>
 <div class="row">

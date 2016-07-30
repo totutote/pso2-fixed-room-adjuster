@@ -3,6 +3,7 @@ class RoomMember < ApplicationRecord
 
   belongs_to :room
   belongs_to :player
+  belongs_to :player_character, optional: true
 
   def saved?
     id && persisted?

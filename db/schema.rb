@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160730073808) do
+ActiveRecord::Schema.define(version: 20160730100144) do
 
   create_table "groups", force: :cascade do |t|
     t.string   "uuid",           limit: 73
@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 20160730073808) do
     t.integer  "party_number"
     t.boolean  "is_room_leader"
     t.boolean  "is_party_leader"
+    t.integer  "player_character_id"
   end
 
   create_table "rooms", force: :cascade do |t|
