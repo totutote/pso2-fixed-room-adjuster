@@ -1,3 +1,3 @@
 class PlayerCharacter < ApplicationRecord
-  CLASS_LIST = ["未定", "Hu", "Fi", "Ra", "Gu", "Fo", "Te", "Br", "Bo", "Su"]
+  CLASS_LIST = ["Hu", "Fi", "Ra", "Gu", "Fo", "Te", "Br", "Bo", "Su"]
 end

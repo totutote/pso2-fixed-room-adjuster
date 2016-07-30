@@ -16,14 +16,14 @@
   <div class="col-xs-2">
     <div class="form_group">
       <%= c.label :main_class, 'メインクラス' %>
-      <%= c.select :main_class, main_class_options, {}, {class: "form-control"} %>
+      <%= c.select :main_class, main_class_options, {:include_blank => true}, {class: "form-control"} %>
     </div>
   </div>
   <% sub_class_options = options_for_select(PlayerCharacter::CLASS_LIST, @player_character.sub_class) %>
   <div class="col-xs-2">
     <div class="form_group">
       <%= c.label :sub_class, 'サブクラス' %>
-      <%= c.select :sub_class, sub_class_options, {}, {class: "form-control"} %>
+      <%= c.select :sub_class, sub_class_options, {:include_blank => true}, {class: "form-control"} %>
     </div>
   </div>
   <% end %> 
