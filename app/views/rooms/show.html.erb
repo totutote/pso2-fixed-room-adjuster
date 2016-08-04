@@ -97,6 +97,18 @@
 <%= render 'add_guest_form', f: f, room_uuid: params[:uuid] %>
 <% end %>
 
+<h2>コメント</h2>
+<% unless @comments.empty? %>
+<ul class="list-group">
+  <% @comments.order(:created_at).each do |comment| %>
+    <li><%= comment.comment %> : <%= comment.name %></li>
+  <% end %>
+</ul>
+<% end %>
+<%= form_for(@new_comment, url: room_room_comments_path(params[:uuid]), html: {role: "form"}) do |f| %>
+<%= render 'room_comments/add_comment_form', f: f, room_uuid: params[:uuid] %>
+<% end %>
+
 <script>
 var clipboard = new Clipboard('.cpy-btn');
 $('[data-toggle="cpy-tooltip"]').tooltip();

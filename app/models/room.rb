@@ -10,6 +10,8 @@ class Room < ApplicationRecord
 
   belongs_to :group, optional: true
 
+  has_many :room_comments, dependent: :destroy
+
   def saved?
     id && persisted?
   end

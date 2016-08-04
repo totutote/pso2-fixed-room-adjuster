@@ -1,0 +1,19 @@
+<div class="row">
+<div class="col-xs-3">
+  <div class="form-group">
+    <%= f.label :name, "投稿名", for: "name" %>
+    <%= f.text_field :name, class: "form-control", id: "name" %>
+  </div>
+</div>
+<div class="col-xs-9">
+  <%= fields_for @new_comment, room_room_members_path(room_uuid) do |c| %>
+    <div class="form_group">
+      <%= c.label :comment ,'コメント' %>
+      <%= c.text_field :comment, class: "form-control" %>
+    </div>
+  </div>
+  <% end %> 
+</div>
+<div class="actions">
+<p><%= f.submit '投稿する', :class => "btn btn-default" %></p>
+</div>

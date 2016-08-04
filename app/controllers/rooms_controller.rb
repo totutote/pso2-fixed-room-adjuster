@@ -32,6 +32,8 @@ class RoomsController < ApplicationController
     @room_member = RoomMember.new
     @player_character = PlayerCharacter.new
     @page_url = page_url
+    @comments = RoomComment.where(room_id: @room.id)
+    @new_comment = RoomComment.new
   end
 
   def edit

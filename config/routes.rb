@@ -11,6 +11,7 @@ Rails.application.routes.draw do
         patch 'reset_organize'
       end
     end
+    resources :room_comments, only: :create
   end
 
   resources :groups, param: :uuid
