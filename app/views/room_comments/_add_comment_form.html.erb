@@ -6,14 +6,12 @@
   </div>
 </div>
 <div class="col-xs-9">
-  <%= fields_for @new_comment, room_room_members_path(room_uuid) do |c| %>
-    <div class="form_group">
-      <%= c.label :comment ,'コメント' %>
-      <%= c.text_field :comment, class: "form-control" %>
-    </div>
+  <div class="form_group">
+    <%= f.label :comment ,'コメント' %>
+    <%= f.text_field :comment, class: "form-control" %>
   </div>
-  <% end %> 
+</div>
 </div>
 <div class="actions">
-<p><%= f.submit '投稿する', :class => "btn btn-default" %></p>
+<p><%= f.submit '投稿する', :class => "btn btn-default", data: { confirm: "投稿しますか？"}  %></p>
 </div>
