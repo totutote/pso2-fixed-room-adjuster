@@ -1,0 +1,17 @@
+<div class="row">
+<div class="col-xs-3">
+  <div class="form-group">
+    <%= f.label :name, "投稿名", for: "name" %>
+    <%= f.text_field :name, class: "form-control", id: "name" %>
+  </div>
+</div>
+<div class="col-xs-9">
+  <div class="form_group">
+    <%= f.label :comment ,'コメント' %>
+    <%= f.text_field :comment, class: "form-control" %>
+  </div>
+</div>
+</div>
+<div class="actions">
+<p><%= f.submit '投稿する', :class => "btn btn-default", data: { confirm: "投稿しますか？"}  %></p>
+</div>
