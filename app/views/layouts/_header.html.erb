@@ -5,6 +5,13 @@
       <ul class="nav navbar-nav">
         <li><%= link_to "固定一覧", rooms_path %></li>
         <li><%= link_to "グループ一覧", groups_path %></li>
+        <li>
+        <% if user_signed_in? %>
+          <%= link_to 'Sign out', destroy_user_session_path, method: :delete %>
+        <% else %>
+          <%= link_to 'Sign in', user_twitter_omniauth_authorize_path %>
+        <% end %>
+        </li>
       </ul>
     </div>
   </div>
