@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'users/login'
+
   root 'rooms#index'
 
   devise_for :users, controllers: {
@@ -23,4 +25,5 @@ Rails.application.routes.draw do
   end
 
   resources :groups, param: :uuid
+
 end
