@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160814112219) do
+ActiveRecord::Schema.define(version: 20160820135429) do
 
   create_table "groups", force: :cascade do |t|
     t.string   "uuid",           limit: 73
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 20160814112219) do
     t.boolean  "is_guest_user",  default: true, null: false
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
+    t.integer  "user_id"
   end
 
   create_table "room_comments", force: :cascade do |t|
@@ -88,9 +89,15 @@ ActiveRecord::Schema.define(version: 20160814112219) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "user_auths", force: :cascade do |t|
+    t.integer "user_id"
+    t.string  "uid"
+    t.string  "provider"
+    t.index ["uid", "provider"], name: "index_user_auths_on_uid_and_provider", unique: true
+    t.index ["user_id"], name: "index_user_auths_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
-    t.string   "provider",                        null: false
-    t.string   "uid",                             null: false
     t.datetime "remember_created_at"
     t.string   "remember_token"
     t.integer  "sign_in_count",       default: 0, null: false
@@ -100,7 +107,6 @@ ActiveRecord::Schema.define(version: 20160814112219) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
-    t.index ["provider", "uid"], name: "index_users_on_provider_and_uid", unique: true
   end
 
 end
