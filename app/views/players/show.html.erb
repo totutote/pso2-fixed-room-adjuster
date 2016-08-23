@@ -1,0 +1,34 @@
+<div class="page-header">
+<h1>プレイヤー情報</h1>
+</div>
+
+<dl class="dl-horizontal">
+<dt>プレイヤーネームID</dt><dd><%= @player.player_id_name %></dd>
+</dl>
+
+<% if user_signed_in? %>
+<%= link_to '編集する', edit_player_path(@player.id), :action => "edit", class: "btn btn-default" %>
+<% end %>
+
+<% unless @player.player_characters.empty? %>
+<h2>キャラクター</h2>
+<ol class="list-group">
+  <% @player.player_characters.order(:id).each_with_index do |player_character| %>
+    <li class="list-group-item">
+    <div class="row">
+      <div class="col-md-11"><%= player_character.name %></div>
+      <% if user_signed_in? %>
+      <div class="col-md-1">
+        <%= link_to '編集', edit_player_character_path(player_character), :action => "edit", method: :get, class: "btn btn-default btn-xs" %>
+      </div>
+      <% end %>
+    </div>
+    </li>
+  <% end %>
+</ol>
+<% end %>
+
+<% if user_signed_in? %>
+<%= link_to 'キャラクターの追加', new_player_character_path, class: "btn btn-primary" %>
+<% end %>
+

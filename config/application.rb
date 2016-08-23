@@ -13,5 +13,9 @@ module Pso2FixedRoomAdjuster
     # -- all .rb files in that directory are automatically loaded.
     config.time_zone = 'Tokyo'
     config.active_record.default_timezone = :local
+
+    config.to_prepare do
+      Devise::SessionsController.skip_before_filter :authenticate_user_must_be_create_player!
+    end
   end
 end
