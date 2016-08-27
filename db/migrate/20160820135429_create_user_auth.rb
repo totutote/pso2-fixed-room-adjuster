@@ -4,6 +4,8 @@ class CreateUserAuth < ActiveRecord::Migration[5.0]
       t.references :user
       t.string :uid
       t.string :provider
+
+      t.timestamps
     end
 
     add_index :user_auths, [:uid, :provider], unique: true

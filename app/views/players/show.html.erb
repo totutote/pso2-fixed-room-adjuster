@@ -14,16 +14,35 @@
 <h2>キャラクター</h2>
 <ol class="list-group">
   <% @player.player_characters.order(:id).each_with_index do |player_character| %>
-    <li class="list-group-item">
-    <div class="row">
-      <div class="col-md-11"><%= player_character.name %></div>
-      <% if user_signed_in? %>
-      <div class="col-md-1">
-        <%= link_to '編集', edit_player_character_path(player_character), :action => "edit", method: :get, class: "btn btn-default btn-xs" %>
+    <div class="list-group-item">
+      <h4>キャラクター名：<%= player_character.name %></h4>
+      <% if player_character.ship_number %><h4>Ship：<%= player_character.ship_number %></h4><% end %>
+      <% if user_signed_in? %><p><%= link_to '編集', edit_player_character_path(player_character), :action => "edit", method: :get, class: "btn btn-default" %></p><% end %>
+      <% unless player_character.player_character_class_sets.empty? %>
+      <div class="panel panel-default">
+      <div class="panel-heading">マイセット</div>
+      <ol class="list-group">
+      <% player_character.player_character_class_sets.order(:id).each_with_index do |player_character_class_set| %>
+        <div class="list-group-item">
+        <h5><%= player_character_class_set.name %></h5>
+        <p>メインクラス:<%= player_character_class_set.main_class %>  サブクラス:<%= player_character_class_set.sub_class %> 
+        <% if player_character_class_set.skill_tree %>
+        <%= link_to 'スキルツリー', "http://pso2skillsimulator.com/simulator/?code="+player_character_class_set.skill_tree, target: ["_blank"], class: "btn btn-default" %>
+        <% end %>
+        <% if user_signed_in? %>
+        <%= link_to 'マイセットの編集', edit_player_character_player_character_class_set_path(player_character, player_character_class_set),
+        :action => "edit", method: :get, class: "btn btn-default" %>
+        <% end %>
+        </p>
+        </div>
+      <% end %>
+      </ol>
       </div>
       <% end %>
+      <% if user_signed_in? %>
+        <%= link_to 'マイセットの追加', new_player_character_player_character_class_set_path(player_character), class: "btn btn-primary" %>
+      <% end %>
     </div>
-    </li>
   <% end %>
 </ol>
 <% end %>

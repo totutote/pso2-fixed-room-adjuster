@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160820135429) do
+ActiveRecord::Schema.define(version: 20160826174530) do
 
   create_table "groups", force: :cascade do |t|
     t.string   "uuid",           limit: 73
@@ -22,13 +22,35 @@ ActiveRecord::Schema.define(version: 20160820135429) do
     t.datetime "updated_at",                null: false
   end
 
+  create_table "player_character_class_sets", force: :cascade do |t|
+    t.integer  "player_character_id"
+    t.string   "name"
+    t.string   "main_class"
+    t.string   "sub_class"
+    t.string   "skill_tree"
+    t.string   "weapan"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.index ["player_character_id"], name: "index_player_character_class_sets_on_player_character_id"
+  end
+
   create_table "player_characters", force: :cascade do |t|
     t.integer  "player_id"
     t.string   "name"
     t.string   "main_class"
     t.string   "sub_class"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "ship_number"
+    t.integer  "hu_lv"
+    t.integer  "fi_lv"
+    t.integer  "ra_lv"
+    t.integer  "gu_lv"
+    t.integer  "fo_lv"
+    t.integer  "te_lv"
+    t.integer  "br_lv"
+    t.integer  "bo_lv"
+    t.integer  "su_lv"
   end
 
   create_table "players", force: :cascade do |t|
@@ -90,9 +112,11 @@ ActiveRecord::Schema.define(version: 20160820135429) do
   end
 
   create_table "user_auths", force: :cascade do |t|
-    t.integer "user_id"
-    t.string  "uid"
-    t.string  "provider"
+    t.integer  "user_id"
+    t.string   "uid"
+    t.string   "provider"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["uid", "provider"], name: "index_user_auths_on_uid_and_provider", unique: true
     t.index ["user_id"], name: "index_user_auths_on_user_id"
   end

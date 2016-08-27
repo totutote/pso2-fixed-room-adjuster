@@ -10,10 +10,12 @@ Rails.application.routes.draw do
   end
   get 'users/login'
 
-  get ':player_id_name', to: 'players#show', as: :player
-  patch ':player_id_name', to: 'players#update', as: :player_update
+  get 'player/:player_id_name', to: 'players#show', as: :player
+  patch 'player/:player_id_name', to: 'players#update', as: :player_update
   resources :players
-  resources :player_characters
+  resources :player_characters do
+    resources :player_character_class_sets
+  end
 
   resources :rooms, param: :uuid do
     member do

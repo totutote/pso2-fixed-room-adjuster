@@ -32,7 +32,7 @@ class PlayerCharactersController < ApplicationController
   private
 
   def player_character_params
-    params.require(:player_character).permit(:name)
+    params.require(:player_character).permit(:name, :ship_number)
   end
 
 end
