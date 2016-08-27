@@ -9,7 +9,7 @@ class PlayerCharactersController < ApplicationController
   def create
     @player_character = ::PlayerCharacters::CreateService.new(player_character_params, current_user.player).execute
     if @player_character.saved?
-      redirect_to player_path(@player_character.player.player_id_name), notice: "'#{@player_character.name}' を登録しました。"
+      redirect_to player_path(@player_character.player), notice: "'#{@player_character.name}' を登録しました。"
     else
       render 'new'
     end
@@ -23,7 +23,7 @@ class PlayerCharactersController < ApplicationController
     player_character = current_user.player.player_characters.find(params[:id])
     status = ::PlayerCharacters::UpdateService.new(player_character, player_character_params).execute
     if status
-      redirect_to player_path(player_character.player.player_id_name), notice: "編集しました。"
+      redirect_to player_path(player_character.player), notice: "編集しました。"
     else
       render 'edit'
     end 

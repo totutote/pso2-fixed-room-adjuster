@@ -11,15 +11,17 @@
       <%= c.label :name ,'キャラクター名' %>
       <%= c.text_field :name, class: "form-control" %>
     </div>
+  <% end %>
   </div>
-  <% main_class_options = options_for_select(PlayerCharacter::CLASS_LIST, @player_character.main_class) %>
+  <%= fields_for @player_character_class_set, room_room_members_path(room_uuid) do |c| %>
+  <% main_class_options = options_for_select(PlayerCharacter::CLASS_LIST, @player_character_class_set.main_class) %>
   <div class="col-xs-2">
     <div class="form_group">
       <%= c.label :main_class, 'メインクラス' %>
       <%= c.select :main_class, main_class_options, {:include_blank => true}, {class: "form-control"} %>
     </div>
   </div>
-  <% sub_class_options = options_for_select(PlayerCharacter::CLASS_LIST, @player_character.sub_class) %>
+  <% sub_class_options = options_for_select(PlayerCharacter::CLASS_LIST, @player_character_class_set.sub_class) %>
   <div class="col-xs-2">
     <div class="form_group">
       <%= c.label :sub_class, 'サブクラス' %>

@@ -24,16 +24,23 @@
       <ol class="list-group">
       <% player_character.player_character_class_sets.order(:id).each_with_index do |player_character_class_set| %>
         <div class="list-group-item">
-        <h5><%= player_character_class_set.name %></h5>
-        <p>メインクラス:<%= player_character_class_set.main_class %>  サブクラス:<%= player_character_class_set.sub_class %> 
-        <% if player_character_class_set.skill_tree %>
+        <h4><%= player_character_class_set.name %></h4>
+        <div class="row">
+        <div class="col-md-3">
+        <p>メインクラス:<%= player_character_class_set.main_class %>  サブクラス:<%= player_character_class_set.sub_class %></p> 
+        </div>
+        <div class="col-md-7">
+        <% unless player_character_class_set.skill_tree.blank? %>
         <%= link_to 'スキルツリー', "http://pso2skillsimulator.com/simulator/?code="+player_character_class_set.skill_tree, target: ["_blank"], class: "btn btn-default" %>
         <% end %>
+        </div>
+        <div class="col-md-2">
         <% if user_signed_in? %>
         <%= link_to 'マイセットの編集', edit_player_character_player_character_class_set_path(player_character, player_character_class_set),
         :action => "edit", method: :get, class: "btn btn-default" %>
         <% end %>
-        </p>
+        </div>
+        </div>
         </div>
       <% end %>
       </ol>

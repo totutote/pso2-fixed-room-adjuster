@@ -1,7 +1,7 @@
 class RoomMembersController < ApplicationController
 
   def create
-    @room_member = ::RoomMembers::JoinGuestService.new(guest_player_params, room_member_params, player_character_params, Room.where(uuid: params[:room_uuid]).first.id).execute
+    @room_member = ::RoomMembers::JoinGuestService.new(guest_player_params, room_member_params, player_character_params, player_character_class_set_params, Room.where(uuid: params[:room_uuid]).first.id).execute
     if @room_member.saved?
       redirect_to room_path(params[:room_uuid]), notice: "'#{@room_member.room.name}'に参加登録しました。"
     else
@@ -13,10 +13,14 @@ class RoomMembersController < ApplicationController
     @room_member = RoomMember.where(id: params[:id]).first
     @player_character = @room_member.player_character
     @player_character ||= PlayerCharacter.new
+    if @room_member.player_character
+      @player_character_class_set = @room_member.player_character.player_character_class_sets.first
+    end
+    @player_character_class_set ||= PlayerCharacterClassSet.new
   end
 
   def update
-    status = ::RoomMembers::UpdateService.new(guest_player_params, room_member_params, player_character_params, RoomMember.find(params[:id])).execute
+    status = ::RoomMembers::UpdateService.new(guest_player_params, room_member_params, player_character_params, player_character_class_set_params, RoomMember.find(params[:id])).execute
     if status
       redirect_to room_path(params[:room_uuid]), notice: "編集しました。"
     else
@@ -55,7 +59,11 @@ class RoomMembersController < ApplicationController
   end
 
   def player_character_params
-    params.require(:player_character).permit(:name, :main_class, :sub_class)
+    params.require(:player_character).permit(:name)
+  end
+
+  def player_character_class_set_params
+    params.require(:player_character_class_set).permit(:name, :main_class, :sub_class)
   end
 
 end

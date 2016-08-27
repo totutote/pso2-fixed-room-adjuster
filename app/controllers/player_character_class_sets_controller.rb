@@ -10,7 +10,7 @@ class PlayerCharacterClassSetsController < ApplicationController
     player_character = current_user.player.player_characters.find(params[:player_character_id])
     @player_character_class_set = ::PlayerCharacterClassSets::CreateService.new(player_character_class_set_params, player_character).execute
     if @player_character_class_set.saved?
-      redirect_to player_path(@player_character_class_set.player_character.player.player_id_name), notice: "'#{@player_character_class_set.name}' を登録しました。"
+      redirect_to player_path(@player_character_class_set.player_character.player), notice: "'#{@player_character_class_set.name}' を登録しました。"
     else
       render 'new'
     end
@@ -24,7 +24,7 @@ class PlayerCharacterClassSetsController < ApplicationController
     player_character_class_set = find_auth_player_chracter_class_set(params[:player_character_id], params[:id])
     status = ::PlayerCharacterClassSets::UpdateService.new(player_character_class_set, player_character_class_set_params).execute
     if status
-      redirect_to player_path(player_character_class_set.player_character.player.player_id_name), notice: "編集しました。"
+      redirect_to player_path(player_character_class_set.player_character.player), notice: "編集しました。"
     else
       render 'edit'
     end 

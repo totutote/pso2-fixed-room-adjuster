@@ -10,8 +10,6 @@ Rails.application.routes.draw do
   end
   get 'users/login'
 
-  get 'player/:player_id_name', to: 'players#show', as: :player
-  patch 'player/:player_id_name', to: 'players#update', as: :player_update
   resources :players
   resources :player_characters do
     resources :player_character_class_sets

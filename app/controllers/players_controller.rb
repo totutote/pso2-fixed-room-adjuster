@@ -10,14 +10,14 @@ class PlayersController < ApplicationController
   def create
     @player = ::Players::CreateService.new(player_params, current_user).execute
     if @player.saved?
-      redirect_to player_path(@player.player_id_name), notice: "'#{@player.player_id_name}' を作成しました。"
+      redirect_to player_path(@player), notice: "'#{@player.player_id_name}' を作成しました。"
     else
       render 'new'
     end
   end
 
   def show
-    @player = Player.find_by_player_id_name!(params[:player_id_name])
+    @player = Player.find(params[:id])
   end
 
   def edit
@@ -27,7 +27,7 @@ class PlayersController < ApplicationController
   def update
     status = ::Players::UpdateService.new(current_user.player, player_params).execute
     if status
-      redirect_to player_path(current_user.player.player_id_name), notice: "編集しました。"
+      redirect_to player_path(current_user.player), notice: "編集しました。"
     else
       redirect_to edit_player_path(current_user.player), notice: "入力に誤りがあります。"
     end 

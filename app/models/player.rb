@@ -1,11 +1,9 @@
 class Player < ApplicationRecord
-  validates :player_id_name, presence: true, uniqueness: true
+  validates :player_id_name, presence: true
 
-  has_many :room_members
-  has_many :rooms, through: :room_members
   has_many :player_characters, dependent: :destroy
 
-  belongs_to :user
+  belongs_to :user, optional: true
 
   def saved?
     id && persisted?

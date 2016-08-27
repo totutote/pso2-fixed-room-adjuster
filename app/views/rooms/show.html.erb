@@ -36,20 +36,20 @@
 
 <%= link_to '編集する', edit_room_path, :action => "edit", class: "btn btn-default" %>
 
-<% unless @room.players.empty? %>
+<% unless @room.player_characters.empty? %>
 <h2>現在の参加メンバー</h2>
 <ol class="list-group">
   <% @room.room_members.order(:id).each_with_index do |room_member, i| %>
     <li class="list-group-item">
     <div class="row">
       <% player_character = room_member.player_character %>
-      <% if player_character && !(player_character.name.blank? && player_character.main_class.blank? && player_character.sub_class.blank?) %>
+      <% if player_character && player_character.player_character_class_sets.first && !(player_character.name.blank? && player_character.player_character_class_sets.first.main_class.blank? && player_character.player_character_class_sets.first.sub_class.blank?) %>
         <% character_name = player_character.name.blank? ? "未定" : player_character.name %>
-        <% character_main_class = player_character.main_class.blank? ? "未定" : player_character.main_class %>
-        <% character_sub_class = player_character.sub_class.blank? ? "未定" : player_character.sub_class %>
-        <div class="col-md-7"><%= "#{h(i + 1)}. " + room_member.player.player_id_name + " / " + character_name + " (" + character_main_class + "/" + character_sub_class + ")" %></div>
+        <% character_main_class = player_character.player_character_class_sets.first.main_class.blank? ? "未定" : player_character.player_character_class_sets.first.main_class %>
+        <% character_sub_class = player_character.player_character_class_sets.first.sub_class.blank? ? "未定" : player_character.player_character_class_sets.first.sub_class %>
+        <div class="col-md-7"><%= "#{h(i + 1)}. " + room_member.player_character.player.player_id_name + " / " + character_name + " (" + character_main_class + "/" + character_sub_class + ")" %></div>
       <% else %>
-        <div class="col-md-7"><%= "#{h(i + 1)}. " + room_member.player.player_id_name %></div>
+        <div class="col-md-7"><%= "#{h(i + 1)}. " + room_member.player_character.player.player_id_name %></div>
       <% end %>
       <div class="col-md-2"><%= 'ルームリーダー可' if room_member.acceptable_room_leader %></div>
       <div class="col-md-2"><%= 'パーティーリーダー可' if room_member.acceptable_party_leader %></div> 
@@ -75,7 +75,7 @@
       <ul class="list-group">
       <% @room.room_members.where(room_number: room_index, party_number: party_index).order("is_room_leader IS NULL, is_room_leader DESC", "is_party_leader IS NULL, is_party_leader DESC").each do |member| %>
         <li class="list-group-item">
-        <%= member.player.player_id_name %>
+        <%= member.player_character.player.player_id_name %>
         <% if member.is_room_leader %><span class="label label-primary">RM Leader</span>
         <% else %>
           <% if member.is_party_leader %><span class="label label-default">PT Leader</span><% end %> 

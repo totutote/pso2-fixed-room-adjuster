@@ -12,7 +12,7 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">アカウント<span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
             <% if current_user.player %>
-            <li><%= link_to 'プロフィール', player_path(current_user.player.player_id_name) %></li>
+            <li><%= link_to 'プロフィール', player_path(current_user.player) %></li>
             <li class="divider"></li>
             <% end %>
             <li><%= link_to 'Sign out', destroy_user_session_path, method: :delete %></li>
