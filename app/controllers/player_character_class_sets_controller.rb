@@ -30,6 +30,11 @@ class PlayerCharacterClassSetsController < ApplicationController
     end 
   end
 
+  def destroy
+    find_auth_player_chracter_class_set(params[:player_character_id], params[:id]).destroy
+    redirect_to player_path(current_user.player)
+  end
+
   private
 
   def player_character_class_set_params

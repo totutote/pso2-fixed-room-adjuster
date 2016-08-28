@@ -4,3 +4,9 @@
 <%= form_for(@player_character, html: {role: "form"}) do |f| %>
 <%= render 'create_form', f: f %>
 <% end %>
+
+<h3>キャラクターの削除</h3>
+<p>
+<%= link_to '削除', player_character_path(@player_character), :action => "update", method: :delete, class: "btn btn-danger",
+        data: { confirm: @player_character.name + 'を削除しますか？' } %>
+</p>

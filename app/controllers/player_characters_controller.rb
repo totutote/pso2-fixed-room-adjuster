@@ -29,6 +29,11 @@ class PlayerCharactersController < ApplicationController
     end 
   end
 
+  def destroy
+    current_user.player.player_characters.find(params[:id]).destroy
+    redirect_to player_path(current_user.player)
+  end
+
   private
 
   def player_character_params

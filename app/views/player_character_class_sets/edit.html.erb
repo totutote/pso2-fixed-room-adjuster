@@ -4,3 +4,9 @@
 <%= form_for([:player_character, @player_character_class_set], html: {role: "form"}) do |f| %>
 <%= render 'create_form', f: f %>
 <% end %>
+
+<h3>マイセットの削除</h3>
+<p>
+<%= link_to '削除', player_character_player_character_class_set_path(params[:player_character_id], @player_character_class_set), :action => "update", method: :delete, class: "btn btn-danger",
+        data: { confirm: @player_character_class_set.name + 'を削除しますか？' } %>
+</p>
