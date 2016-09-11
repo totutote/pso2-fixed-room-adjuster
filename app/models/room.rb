@@ -6,7 +6,7 @@ class Room < ApplicationRecord
   validates :quest_end_time, presence: true
 
   has_many :room_members, dependent: :destroy
-  has_many :players, through: :room_members
+  has_many :player_characters, through: :room_members
 
   belongs_to :group, optional: true
 

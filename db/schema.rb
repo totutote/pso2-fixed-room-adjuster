@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160802164753) do
+ActiveRecord::Schema.define(version: 20160903100824) do
 
   create_table "groups", force: :cascade do |t|
     t.string   "uuid",           limit: 73
@@ -22,13 +22,34 @@ ActiveRecord::Schema.define(version: 20160802164753) do
     t.datetime "updated_at",                null: false
   end
 
-  create_table "player_characters", force: :cascade do |t|
-    t.integer  "player_id"
+  create_table "player_character_class_sets", force: :cascade do |t|
+    t.integer  "player_character_id"
     t.string   "name"
     t.string   "main_class"
     t.string   "sub_class"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "skill_tree"
+    t.string   "weapan"
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+    t.boolean  "is_guest_user",       default: false
+    t.index ["player_character_id"], name: "index_player_character_class_sets_on_player_character_id"
+  end
+
+  create_table "player_characters", force: :cascade do |t|
+    t.integer  "player_id"
+    t.string   "name"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "ship_number"
+    t.integer  "hu_lv"
+    t.integer  "fi_lv"
+    t.integer  "ra_lv"
+    t.integer  "gu_lv"
+    t.integer  "fo_lv"
+    t.integer  "te_lv"
+    t.integer  "br_lv"
+    t.integer  "bo_lv"
+    t.integer  "su_lv"
   end
 
   create_table "players", force: :cascade do |t|
@@ -37,6 +58,7 @@ ActiveRecord::Schema.define(version: 20160802164753) do
     t.boolean  "is_guest_user",  default: true, null: false
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
+    t.integer  "user_id"
   end
 
   create_table "room_comments", force: :cascade do |t|
@@ -50,7 +72,6 @@ ActiveRecord::Schema.define(version: 20160802164753) do
 
   create_table "room_members", force: :cascade do |t|
     t.integer  "room_id"
-    t.integer  "player_id"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
     t.boolean  "acceptable_room_leader"
@@ -86,6 +107,28 @@ ActiveRecord::Schema.define(version: 20160802164753) do
   create_table "test_rooms", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "user_auths", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "uid"
+    t.string   "provider"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["uid", "provider"], name: "index_user_auths_on_uid_and_provider", unique: true
+    t.index ["user_id"], name: "index_user_auths_on_user_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.datetime "remember_created_at"
+    t.string   "remember_token"
+    t.integer  "sign_in_count",       default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
   end
 
 end

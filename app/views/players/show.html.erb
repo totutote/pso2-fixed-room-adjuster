@@ -1,0 +1,60 @@
+<div class="page-header">
+<h1>プレイヤー情報</h1>
+</div>
+
+<dl class="dl-horizontal">
+<dt>プレイヤーネームID</dt><dd><%= @player.player_id_name %></dd>
+</dl>
+
+<% if user_signed_in? %>
+<%= link_to '編集する', edit_player_path(@player.id), :action => "edit", class: "btn btn-default" %>
+<% end %>
+
+<% unless @player.player_characters.empty? %>
+<h2>キャラクター</h2>
+<ol class="list-group">
+  <% @player.player_characters.order(:id).each_with_index do |player_character| %>
+    <div class="list-group-item">
+      <h4>キャラクター名：<%= player_character.name %></h4>
+      <% if player_character.ship_number %><h4>Ship：<%= player_character.ship_number %></h4><% end %>
+      <% if user_signed_in? %><p><%= link_to '編集', edit_player_character_path(player_character), :action => "edit", method: :get, class: "btn btn-default" %></p><% end %>
+      <% unless player_character.player_character_class_sets.empty? %>
+      <div class="panel panel-default">
+      <div class="panel-heading">マイセット</div>
+      <ol class="list-group">
+      <% player_character.player_character_class_sets.order(:id).each_with_index do |player_character_class_set| %>
+        <div class="list-group-item">
+        <h4><%= player_character_class_set.name %></h4>
+        <div class="row">
+        <div class="col-md-3">
+        <p>メインクラス:<%= player_character_class_set.main_class %>  サブクラス:<%= player_character_class_set.sub_class %></p> 
+        </div>
+        <div class="col-md-7">
+        <% unless player_character_class_set.skill_tree.blank? %>
+        <%= link_to 'スキルツリー', "http://pso2skillsimulator.com/simulator/?code="+player_character_class_set.skill_tree, target: ["_blank"], class: "btn btn-default" %>
+        <% end %>
+        </div>
+        <div class="col-md-2">
+        <% if user_signed_in? %>
+        <%= link_to 'マイセットの編集', edit_player_character_player_character_class_set_path(player_character, player_character_class_set),
+        :action => "edit", method: :get, class: "btn btn-default" %>
+        <% end %>
+        </div>
+        </div>
+        </div>
+      <% end %>
+      </ol>
+      </div>
+      <% end %>
+      <% if user_signed_in? %>
+        <%= link_to 'マイセットの追加', new_player_character_player_character_class_set_path(player_character), class: "btn btn-primary" %>
+      <% end %>
+    </div>
+  <% end %>
+</ol>
+<% end %>
+
+<% if user_signed_in? %>
+<%= link_to 'キャラクターの追加', new_player_character_path, class: "btn btn-primary" %>
+<% end %>
+

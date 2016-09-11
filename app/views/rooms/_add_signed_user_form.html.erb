@@ -1,0 +1,100 @@
+<div class="row">
+<div class="col-xs-4">
+  <%= fields_for @player_character, room_room_members_path(room_uuid) do |c| %>
+    <div class="form_group">
+      <%= c.label :name ,'キャラクター' %>
+      <% character_options = options_for_select(@current_user.player.player_characters.map{|model|
+        [model.name, model.id, data: {'children-path'=> index_ajax_player_character_player_character_class_sets_path(model.id)}]
+      }, @player_character.try(:name)) %>
+      <%= c.select :name, character_options, {:include_blank => true}, {class: "form-control", 'data-role'=>'character_select'} %>
+    </div>
+  <% end %>
+</div>
+<div class="col-xs-4">
+  <%= fields_for @player_character, room_room_members_path(room_uuid) do |c| %>
+    <div class="form_group">
+      <%= c.label :name ,'クラスセット' %>
+      <% class_set_options = options_for_select(Array.new) %>
+      <%= c.select :name, class_set_options, {:include_blank => true}, {class: "form-control", 'data-role'=>'classset'} %>
+    </div>
+  <% end %>
+</div>
+  <%= fields_for @player_character_class_set, room_room_members_path(room_uuid) do |c| %>
+  <% main_class_options = options_for_select(PlayerCharacter::CLASS_LIST, @player_character_class_set.main_class) %>
+  <div class="col-xs-2">
+    <div class="form_group">
+      <%= c.label :main_class, 'メインクラス' %>
+      <%= c.select :main_class, main_class_options, {:include_blank => true}, {class: "form-control"} %>
+    </div>
+  </div>
+  <% sub_class_options = options_for_select(PlayerCharacter::CLASS_LIST, @player_character_class_set.sub_class) %>
+  <div class="col-xs-2">
+    <div class="form_group">
+      <%= c.label :sub_class, 'サブクラス' %>
+      <%= c.select :sub_class, sub_class_options, {:include_blank => true}, {class: "form-control"} %>
+    </div>
+  </div>
+  <% end %> 
+</div>
+  <%= fields_for @room_member, room_room_members_path(room_uuid) do |c| %>
+    <div class="checkbox">
+      <%= c.check_box :acceptable_room_leader %>
+      <%= c.label :acceptable_room_leader ,'ルームリーダー引受可能' %>
+    </div>
+    <div class="checkbox">
+      <%= c.check_box :acceptable_party_leader %>
+      <%= c.label :acceptable_party_leader, 'パーティーリーダー引受可能' %>
+    </div>
+  <% end %>
+  <div class="actions">
+  <p><%= f.submit '登録する', :class => "btn btn-default" %></p>
+  </div>
+
+<script>
+  $(window).load(function(){
+      var replaceSelectOptions = function(select, results){
+          select.children().remove();
+          results.unshift({id: "", name: ""});
+          $.each(results, function(i, value) {
+              option = $('<option>', {value: value.id, text: value.name});
+              select.append(option);
+          });
+      };
+      var character_select = $('[data-role="character_select"]');
+      character_select.change(function(){
+          var url = $('[data-role="character_select"] :selected').data('childrenPath');
+          if(url) {
+          $.ajax({
+              type: "GET",
+              url: $(":selected").data('childrenPath'),
+              dataType: "json",
+              success: function(result){
+                  replaceSelectOptions($('[data-role="classset"]'), result)
+              },
+              error: function(XMLHttpRequest, textStatus, errorThrown){
+                  console.error("Error occurred in replaceChildrenOptions")
+                  console.log("XMLHttpRequest: #{XMLHttpRequest.status}")
+                  console.log("textStatus: #{textStatus}")
+                  console.log("errorThrown: #{errorThrown}")
+              }
+          });
+          } else {
+              replaceSelectOptions($('[data-role="classset"]'), [])
+          }
+      });
+      var classset_select = $('[data-role="classset"]');
+      classset_select.change(function(){
+          var value = $('[data-role="classset"] :selected').val();
+          if(value){
+              $("select[name='player_character_class_set[main_class]']").attr("disabled", true);
+              $("select[name='player_character_class_set[sub_class]']").attr("disabled", true);
+              $("select[name='player_character_class_set[main_class]']").val("");
+              $("select[name='player_character_class_set[sub_class]']").val("");
+          } else {
+              $("select[name='player_character_class_set[main_class]']").attr("disabled", false);
+              $("select[name='player_character_class_set[sub_class]']").attr("disabled", false);
+          }
+      });
+
+  });
+</script>

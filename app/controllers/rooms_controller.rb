@@ -31,6 +31,7 @@ class RoomsController < ApplicationController
     @player = Player.new
     @room_member = RoomMember.new
     @player_character = PlayerCharacter.new
+    @player_character_class_set = PlayerCharacterClassSet.new
     @page_url = page_url
     @comments = RoomComment.where(room_id: @room.id)
     @new_comment = RoomComment.new

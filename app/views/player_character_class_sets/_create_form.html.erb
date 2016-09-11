@@ -1,0 +1,29 @@
+<div class="form-group">
+  <div class="field">
+    <%= f.label :name, "セット名" %>
+    <%= f.text_field :name, :class => "form-control" %>
+  </div>
+</div>
+<div class="form_group">
+  <div class="row">
+    <div class="col-xs-2">
+      <%= f.label :main_class, 'メインクラス' %>
+      <% main_class_options = options_for_select(PlayerCharacter::CLASS_LIST, @player_character_class_set.main_class) %>
+      <%= f.select :main_class, main_class_options, {:include_blank => true}, {class: "form-control"} %>
+    </div>
+    <% sub_class_options = options_for_select(PlayerCharacter::CLASS_LIST, @player_character_class_set.sub_class) %>
+    <div class="col-xs-2">
+      <%= f.label :sub_class, 'サブクラス' %>
+      <%= f.select :sub_class, sub_class_options, {:include_blank => true}, {class: "form-control"} %>
+    </div> 
+  </div>
+</div>
+<div class="form-group">
+  <div class="field">
+    <%= f.label :skill_tree, "スキルツリー（#{link_to 'Skill Simulator', "http://pso2skillsimulator.com/simulator/", target: ["_blank"]}のCODEを入力してください）".html_safe %>
+    <%= f.text_field :skill_tree, :class => "form-control" %>
+  </div>
+</div>
+<div class="actions">
+  <p><%= f.submit :class => "btn btn-default" %></p>
+</div>

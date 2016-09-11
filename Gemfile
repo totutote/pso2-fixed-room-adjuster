@@ -58,3 +58,9 @@ gem 'kaminari'
 # Other service librarys
 gem 'google-api-client', '0.9'
 
+# Devise
+gem 'devise'
+gem 'omniauth-twitter'
+gem 'omniauth-google-oauth2'
+gem 'bootstrap-social-rails'
+gem 'font-awesome-rails'

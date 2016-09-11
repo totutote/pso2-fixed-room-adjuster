@@ -2,12 +2,12 @@
 <h1>参加メンバーの編集</h1>
 </div>
 
-<%= form_for(@room_member.player, url: room_room_member_path(params[:room_uuid]), html: {role: "form"}) do |f| %>
+<%= form_for(@room_member.player_character.player, url: room_room_member_path(params[:room_uuid]), html: {role: "form"}) do |f| %>
 <%= render 'rooms/add_guest_form', f: f, room_uuid: params[:room_uuid] %>
 <% end %>
 
 <h3>メンバーのキック</h3>
 <p>
 <%= link_to 'キック', room_room_member_path(params[:room_uuid], @room_member.id), :action => "update", method: :delete, class: "btn btn-danger",
-        data: { confirm: @room_member.player.player_id_name + 'をキックしますか？' } %>
+        data: { confirm: @room_member.player_character.player.player_id_name + 'をキックしますか？' } %>
 </p>

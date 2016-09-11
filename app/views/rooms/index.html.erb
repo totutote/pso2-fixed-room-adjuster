@@ -13,7 +13,7 @@
     <div class="row">
       <div class="col-md-6"><%= room.name %></div>
       <div class="col-md-2"><%= link_to '詳細を確認', room_path(room.uuid) %></div>
-      <div class="col-md-2"><%= "参加数 : " + room.players.count.to_s + (room.max_player.blank? ? "" : "/" + room.max_player.to_s) %></div>
+      <div class="col-md-2"><%= "参加数 : " + room.player_characters.count.to_s + (room.max_player.blank? ? "" : "/" + room.max_player.to_s) %></div>
       <div class="col-md-2"><%= room.quest_start_time.strftime('%m月%d日 %H:%M') + "開始" %></div>
     </div>
   </li>
