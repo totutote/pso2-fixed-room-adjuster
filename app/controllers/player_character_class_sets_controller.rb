@@ -35,6 +35,10 @@ class PlayerCharacterClassSetsController < ApplicationController
     redirect_to player_path(current_user.player)
   end
 
+  def index_ajax
+    render json: current_user.player.player_characters.find(params[:player_character_id]).player_character_class_sets.select(:id, :name, :main_class, :sub_class)
+  end
+
   private
 
   def player_character_class_set_params

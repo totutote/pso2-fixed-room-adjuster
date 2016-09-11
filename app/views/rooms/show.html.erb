@@ -93,8 +93,14 @@
 <% end %>
 
 <h3>固定に参加する</h3>
-<%= form_for(@player, url: room_room_members_path(params[:uuid]), html: {role: "form"}) do |f| %>
-<%= render 'add_guest_form', f: f, room_uuid: params[:uuid] %>
+<% if user_signed_in? %>
+  <%= form_for(@player, url: room_room_members_path(params[:uuid]), html: {role: "form"}) do |f| %>
+  <%= render 'add_signed_user_form', f: f, room_uuid: params[:uuid] %>
+  <% end %>
+<% else %>
+  <%= form_for(@player, url: room_room_members_path(params[:uuid]), html: {role: "form"}) do |f| %>
+  <%= render 'add_guest_form', f: f, room_uuid: params[:uuid] %>
+  <% end %>
 <% end %>
 
 <h2>コメント</h2>

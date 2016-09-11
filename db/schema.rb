@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160827160529) do
+ActiveRecord::Schema.define(version: 20160903100824) do
 
   create_table "groups", force: :cascade do |t|
     t.string   "uuid",           limit: 73
@@ -29,8 +29,9 @@ ActiveRecord::Schema.define(version: 20160827160529) do
     t.string   "sub_class"
     t.string   "skill_tree"
     t.string   "weapan"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+    t.boolean  "is_guest_user",       default: false
     t.index ["player_character_id"], name: "index_player_character_class_sets_on_player_character_id"
   end
 

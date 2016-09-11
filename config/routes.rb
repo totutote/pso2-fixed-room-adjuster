@@ -12,7 +12,11 @@ Rails.application.routes.draw do
 
   resources :players
   resources :player_characters do
-    resources :player_character_class_sets
+    resources :player_character_class_sets do
+      collection do
+        get 'index_ajax'
+      end
+    end
   end
 
   resources :rooms, param: :uuid do
@@ -30,3 +34,4 @@ Rails.application.routes.draw do
 
   resources :groups, param: :uuid
 end
+
